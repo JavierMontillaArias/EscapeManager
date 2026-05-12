@@ -10,7 +10,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="63726c89-014c-489f-9b0b-8e52020eaf14" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/App/app/src/main/res/layout/fragment_create_edit_room.xml" beforeDir="false" afterPath="$PROJECT_DIR$/App/app/src/main/res/layout/fragment_create_edit_room.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/app/src/main/java/com/javiermontillaarias/escapemanager/ui/gamemaster/qrscanner/QrScannerFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/App/app/src/main/java/com/javiermontillaarias/escapemanager/ui/gamemaster/qrscanner/QrScannerFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/app/src/main/java/com/javiermontillaarias/escapemanager/ui/manager/bookings/CreateBookingFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/App/app/src/main/java/com/javiermontillaarias/escapemanager/ui/manager/bookings/CreateBookingFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/app/src/main/java/com/javiermontillaarias/escapemanager/util/Resource.kt" beforeDir="false" afterPath="$PROJECT_DIR$/App/app/src/main/java/com/javiermontillaarias/escapemanager/util/Resource.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/app/src/main/res/layout/fragment_qr_scanner.xml" beforeDir="false" afterPath="$PROJECT_DIR$/App/app/src/main/res/layout/fragment_qr_scanner.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
