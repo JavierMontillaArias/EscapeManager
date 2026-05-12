@@ -64,7 +64,7 @@ class RoomsFragment : Fragment() {
                         putString("name", room.name)
                         putString("theme", room.theme)
                         putInt("capacity", room.capacity)
-                        putString("difficulty", room.difficulty)
+                        putString("difficulty", room.dificultad)
                     }
                 )
                 findNavController().navigate(R.id.createEditRoomFragment, bundle)

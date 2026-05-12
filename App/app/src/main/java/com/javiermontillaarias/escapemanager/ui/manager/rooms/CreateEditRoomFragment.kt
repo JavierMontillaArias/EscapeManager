@@ -47,10 +47,12 @@ class CreateEditRoomFragment : Fragment() {
 
         setupSpinner()
 
-        // Check if editing
         editingRoomId = arguments?.getInt("roomId", -1) ?: -1
 
-        // Listen for room data passed from RoomsFragment
+        binding.btnBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
         requireActivity().supportFragmentManager.setFragmentResultListener(
             "selected_room", viewLifecycleOwner
         ) { _, bundle ->

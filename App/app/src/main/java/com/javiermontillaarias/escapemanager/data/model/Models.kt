@@ -25,50 +25,55 @@ data class RefreshResponse(
 
 data class UserResponse(
     val id: Int,
-    val name: String,
+    @SerializedName("nombre") val name: String,
     val email: String,
-    val role: String  // "Manager" | "Game Master"
-)
+    @SerializedName("rol_id") val rolId: Int,
+    val activo: Boolean
+) {
+    val role: String get() = if (rolId == 3) "Manager" else "Game Master"
+    val isManager: Boolean get() = rolId == 3
+}
 
 // ── Room ──────────────────────────────────────────────────────────────────────
 
 data class Room(
     val id: Int = 0,
-    val name: String,
-    val theme: String,
-    val capacity: Int,
-    val difficulty: String  // "baja" | "media" | "alta" | "extrema"
+    @SerializedName("nombre") val name: String,
+    @SerializedName("tematica") val theme: String,
+    @SerializedName("capacidad_max") val capacity: Int,
+    val dificultad: String,
+    val activa: Boolean = true
 )
 
 data class RoomRequest(
-    val name: String,
-    val theme: String,
-    val capacity: Int,
-    val difficulty: String
+    @SerializedName("nombre") val name: String,
+    @SerializedName("tematica") val theme: String,
+    @SerializedName("capacidad_max") val capacity: Int,
+    val dificultad: String
 )
 
 // ── Booking ───────────────────────────────────────────────────────────────────
 
 data class Booking(
     val id: Int = 0,
-    @SerializedName("room_id") val roomId: Int,
-    @SerializedName("group_name") val groupName: String,
-    @SerializedName("num_people") val numPeople: Int,
+    @SerializedName("sala_id") val roomId: Int,
+    @SerializedName("nombre_grupo") val groupName: String,
+    @SerializedName("num_personas") val numPeople: Int,
     val email: String,
-    val date: String,   // "YYYY-MM-DD"
-    val time: String,   // "HH:MM"
-    val status: String, // "pendiente"|"confirmada"|"en_curso"|"completada"|"cancelada"
+    val fecha: String,
+    val hora: String,
+    val estado: String,
     @SerializedName("qr_token") val qrToken: String? = null,
-    val room: Room? = null
+    val sala: Room? = null
 )
 
 data class BookingRequest(
-    @SerializedName("room_id") val roomId: Int,
-    @SerializedName("group_name") val groupName: String,
-    @SerializedName("num_people") val numPeople: Int,
+    @SerializedName("sala_id") val roomId: Int,
+    @SerializedName("nombre_grupo") val groupName: String,
+    @SerializedName("num_personas") val numPeople: Int,
     val email: String,
-    val date: String,
-    val time: String
+    val fecha: String,
+    val hora: String
 )
 
 // ── QR ────────────────────────────────────────────────────────────────────────
@@ -87,60 +92,65 @@ data class QrValidateResponse(
 
 data class Game(
     val id: Int,
-    @SerializedName("booking_id") val bookingId: Int,
+    @SerializedName("reserva_id") val bookingId: Int,
     @SerializedName("gamemaster_id") val gamemasterId: Int,
-    @SerializedName("hints_used") val hintsUsed: Int,
-    val escaped: Boolean?,
-    val observations: String?,
-    @SerializedName("start_time") val startTime: String?,
-    @SerializedName("end_time") val endTime: String?,
-    val booking: Booking? = null
+    @SerializedName("pistas_usadas") val hintsUsed: Int,
+    val escaparon: Boolean?,
+    val observaciones: String?,
+    @SerializedName("hora_inicio_real") val startTime: String?,
+    @SerializedName("hora_fin_real") val endTime: String?,
+    val gamemaster: GameMaster? = null
+)
+
+data class GameMaster(
+    val id: Int,
+    @SerializedName("nombre") val name: String
 )
 
 data class CloseGameRequest(
-    val escaped: Boolean,
-    val observations: String
+    val escaparon: Boolean,
+    val observaciones: String
 )
 
 data class HintsResponse(
     val message: String,
-    @SerializedName("hints_used") val hintsUsed: Int
+    @SerializedName("pistas_usadas") val hintsUsed: Int
 )
 
 // ── Incident ──────────────────────────────────────────────────────────────────
 
 data class Incident(
     val id: Int = 0,
-    @SerializedName("room_id") val roomId: Int,
-    val description: String,
-    val resolved: Boolean = false,
-    @SerializedName("created_at") val createdAt: String? = null,
-    val room: Room? = null
+    @SerializedName("sala_id") val roomId: Int,
+    val descripcion: String,
+    val resuelta: Boolean = false,
+    @SerializedName("fecha_reporte") val createdAt: String? = null,
+    val sala: Room? = null
 )
 
 data class IncidentRequest(
-    @SerializedName("room_id") val roomId: Int,
-    val description: String
+    @SerializedName("sala_id") val roomId: Int,
+    val descripcion: String
 )
 
 // ── Stats ─────────────────────────────────────────────────────────────────────
 
 data class StatsSummary(
-    @SerializedName("total_bookings") val totalBookings: Int,
-    @SerializedName("active_games") val activeGames: Int,
-    @SerializedName("total_rooms") val totalRooms: Int,
-    @SerializedName("pending_incidents") val pendingIncidents: Int,
-    @SerializedName("monthly_revenue") val monthlyRevenue: Double?
+    @SerializedName("total_reservas") val totalBookings: Int,
+    @SerializedName("total_partidas") val activeGames: Int,
+    @SerializedName("total_salas") val totalRooms: Int,
+    @SerializedName("incidencias_pendientes") val pendingIncidents: Int,
+    @SerializedName("ingresos_mes") val monthlyRevenue: Double?
 )
 
 data class EscapeRate(
-    val room: String,
-    val rate: Double
+    @SerializedName("sala_nombre") val room: String,
+    @SerializedName("tasa_escape") val rate: Double
 )
 
 data class HintsAvg(
-    val room: String,
-    val average: Double
+    @SerializedName("sala_nombre") val room: String,
+    @SerializedName("promedio_pistas") val average: Double
 )
 
 data class OccupancyData(
@@ -149,7 +159,7 @@ data class OccupancyData(
 )
 
 data class RankingEntry(
-    val rank: Int,
-    val room: String,
-    @SerializedName("total_games") val totalGames: Int
+    @SerializedName("posicion") val rank: Int,
+    @SerializedName("sala_nombre") val room: String,
+    @SerializedName("total_partidas") val totalGames: Int
 )

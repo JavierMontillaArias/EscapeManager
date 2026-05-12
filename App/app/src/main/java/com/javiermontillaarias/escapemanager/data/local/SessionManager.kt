@@ -16,6 +16,16 @@ class SessionManager(context: Context) {
         private const val KEY_USER_ROLE = "user_role"
         private const val KEY_USER_NAME = "user_name"
         private const val KEY_USER_ID = "user_id"
+        private const val KEY_SESSION_VERSION = "session_version"
+        private const val CURRENT_SESSION_VERSION = 2
+    }
+
+    init {
+        val savedVersion = prefs.getInt(KEY_SESSION_VERSION, 0)
+        if (savedVersion < CURRENT_SESSION_VERSION) {
+            prefs.edit { clear() }
+            prefs.edit { putInt(KEY_SESSION_VERSION, CURRENT_SESSION_VERSION) }
+        }
     }
 
     var accessToken: String?

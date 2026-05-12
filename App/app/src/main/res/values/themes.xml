@@ -8,6 +8,12 @@
         <item name="android:colorBackground">@color/background</item>
         <item name="colorError">@color/error</item>
         <item name="android:windowBackground">@color/background</item>
+        <item name="bottomNavigationStyle">@style/Widget.EscapeManager.BottomNav</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textColorSecondary">@color/text_secondary</item>
+        <item name="android:textColorHint">#888888</item>
+        <item name="android:editTextColor">@color/text_primary</item>
+        <item name="editTextColor">@color/text_primary</item>
     </style>
 
     <style name="Widget.EscapeManager.Button" parent="Widget.MaterialComponents.Button">
@@ -20,5 +26,12 @@
         <item name="cardElevation">4dp</item>
         <item name="cardCornerRadius">12dp</item>
         <item name="cardBackgroundColor">@color/surface</item>
+    </style>
+
+    <style name="Widget.EscapeManager.BottomNav" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="android:background">@color/white</item>
+        <item name="itemIconTint">@color/primary</item>
+        <item name="itemTextColor">@color/primary</item>
+        <item name="labelVisibilityMode">labeled</item>
     </style>
 </resources>

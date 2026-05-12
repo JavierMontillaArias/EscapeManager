@@ -20,7 +20,7 @@ class RoomsAdapter(
             binding.tvRoomName.text = room.name
             binding.tvRoomTheme.text = "${room.theme}"
             binding.tvCapacity.text = "${room.capacity} personas"
-            binding.tvDifficulty.text = room.difficulty.replaceFirstChar { it.uppercase() }
+            binding.tvDifficulty.text = room.dificultad.replaceFirstChar { it.uppercase() }
             binding.btnEdit.setOnClickListener { onEdit(room) }
             binding.btnDelete.setOnClickListener { onDelete(room) }
         }

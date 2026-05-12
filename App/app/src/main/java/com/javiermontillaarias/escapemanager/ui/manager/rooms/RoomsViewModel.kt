@@ -15,7 +15,7 @@ class RoomsViewModel(private val repository: RoomRepository) : ViewModel() {
     private val _rooms = MutableLiveData<Resource<List<Room>>>()
     val rooms: LiveData<Resource<List<Room>>> = _rooms
 
-    private val _operationResult = MutableLiveData<Resource<Unit>>()
+    private val _operationResult = MutableLiveData<Resource<Unit>>(Resource.Idle)
     val operationResult: LiveData<Resource<Unit>> = _operationResult
 
     init { loadRooms() }
@@ -31,11 +31,11 @@ class RoomsViewModel(private val repository: RoomRepository) : ViewModel() {
         viewModelScope.launch {
             _operationResult.value = Resource.Loading
             val result = repository.createRoom(RoomRequest(name, theme, capacity, difficulty))
+            if (result is Resource.Success) loadRooms()
             _operationResult.value = when (result) {
-                is Resource.Success -> { loadRooms(); Resource.Success(Unit) }
+                is Resource.Success -> Resource.Success(Unit)
                 is Resource.Error -> Resource.Error(result.message)
-                is Resource.Loading -> Resource.Loading
-                is Resource.Idle -> Resource.Idle
+                else -> Resource.Idle
             }
         }
     }
@@ -44,11 +44,11 @@ class RoomsViewModel(private val repository: RoomRepository) : ViewModel() {
         viewModelScope.launch {
             _operationResult.value = Resource.Loading
             val result = repository.updateRoom(id, RoomRequest(name, theme, capacity, difficulty))
+            if (result is Resource.Success) loadRooms()
             _operationResult.value = when (result) {
-                is Resource.Success -> { loadRooms(); Resource.Success(Unit) }
+                is Resource.Success -> Resource.Success(Unit)
                 is Resource.Error -> Resource.Error(result.message)
-                is Resource.Loading -> Resource.Loading
-                is Resource.Idle -> Resource.Idle
+                else -> Resource.Idle
             }
         }
     }
@@ -57,11 +57,11 @@ class RoomsViewModel(private val repository: RoomRepository) : ViewModel() {
         viewModelScope.launch {
             _operationResult.value = Resource.Loading
             val result = repository.deleteRoom(id)
+            if (result is Resource.Success) loadRooms()
             _operationResult.value = when (result) {
-                is Resource.Success -> { loadRooms(); Resource.Success(Unit) }
+                is Resource.Success -> Resource.Success(Unit)
                 is Resource.Error -> Resource.Error(result.message)
-                is Resource.Loading -> Resource.Loading
-                is Resource.Idle -> Resource.Idle
+                else -> Resource.Idle
             }
         }
     }

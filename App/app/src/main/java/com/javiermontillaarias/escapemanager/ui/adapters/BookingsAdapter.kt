@@ -9,19 +9,21 @@ import androidx.recyclerview.widget.RecyclerView
 import com.javiermontillaarias.escapemanager.data.model.Booking
 import com.javiermontillaarias.escapemanager.databinding.ItemBookingBinding
 
-class BookingsAdapter(private val onClick: (Booking) -> Unit) : ListAdapter<Booking, BookingsAdapter.ViewHolder>(BookingDiffCallback()) {
+class BookingsAdapter(
+    private val onClick: (Booking) -> Unit
+) : ListAdapter<Booking, BookingsAdapter.ViewHolder>(BookingDiffCallback()) {
 
     inner class ViewHolder(private val binding: ItemBookingBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(booking: Booking) {
             binding.tvGroupName.text = booking.groupName
-            binding.tvRoomName.text = "${booking.room?.name ?: "Sala #${booking.roomId}"}"
-            binding.tvDateTime.text = "${booking.date} · ⏰ ${booking.time}"
+            binding.tvRoomName.text = "${booking.sala?.name ?: "Sala #${booking.roomId}"}"
+            binding.tvDateTime.text = "${booking.fecha} · ${booking.hora}"
             binding.tvNumPeople.text = "${booking.numPeople} personas"
-            binding.tvStatus.text = booking.status.replaceFirstChar { it.uppercase() }
+            binding.tvStatus.text = booking.estado.replaceFirstChar { it.uppercase() }
 
-            val statusColor = when (booking.status) {
+            val statusColor = when (booking.estado) {
                 "pendiente" -> "#F57C00"
                 "confirmada" -> "#2E75B6"
                 "en_curso" -> "#2E7D32"

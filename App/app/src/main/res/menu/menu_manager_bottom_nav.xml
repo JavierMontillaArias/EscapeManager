@@ -15,7 +15,7 @@
     <item
         android:id="@+id/nav_stats"
         android:icon="@android:drawable/ic_menu_info_details"
-        android:title="Stats" />
+        android:title="Estadísticas" />
     <item
         android:id="@+id/nav_incidents"
         android:icon="@android:drawable/ic_menu_report_image"

@@ -7,6 +7,7 @@ import com.javiermontillaarias.escapemanager.data.network.ApiService
 import com.javiermontillaarias.escapemanager.util.Resource
 
 class AuthRepository(private val api: ApiService, private val sessionManager: SessionManager) {
+
     suspend fun login(email: String, password: String): Resource<Unit> {
         return try {
             val response = api.login(LoginRequest(email, password))
@@ -14,11 +15,11 @@ class AuthRepository(private val api: ApiService, private val sessionManager: Se
                 val body = response.body()!!
                 sessionManager.accessToken = body.accessToken
                 sessionManager.refreshToken = body.refreshToken
-                // Fetch user info
+
                 val meResponse = api.getMe()
                 if (meResponse.isSuccessful) {
                     val user = meResponse.body()!!
-                    sessionManager.userRole = user.role
+                    sessionManager.userRole = if (user.rolId == 3) "Manager" else "Game Master"
                     sessionManager.userName = user.name
                     sessionManager.userId = user.id
                 }

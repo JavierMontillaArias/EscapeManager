@@ -81,7 +81,7 @@ class QrScannerFragment : Fragment() {
                     val bundle = Bundle().apply {
                         putInt("gameId", data.gameId)
                         putString("groupName", data.booking.groupName)
-                        putString("roomName", data.booking.room?.name ?: "")
+                        putString("roomName", data.booking.sala?.name ?: "")
                     }
                     findNavController().navigate(R.id.activeGameFragment, bundle)
                     viewModel.resetState()

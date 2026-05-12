@@ -70,7 +70,7 @@ class ActiveGameFragment : Fragment() {
                 is Resource.Loading -> binding.progressBar.visibility = View.VISIBLE
                 is Resource.Success -> {
                     binding.progressBar.visibility = View.GONE
-                    showGameEndDialog(state.data.escaped == true)
+                    showGameEndDialog(state.data.escaparon == true)
                 }
                 is Resource.Error -> {
                     binding.progressBar.visibility = View.GONE

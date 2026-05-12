@@ -29,7 +29,14 @@ class GmMainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (savedInstanceState == null) showFragment(GmDashboardFragment())
+        // Nombre del usuario en el toolbar
+        binding.toolbar.title = "Hola, ${sessionManager.userName ?: "Game Master"}"
+
+        // Tab inicial
+        if (savedInstanceState == null) {
+            showFragment(GmDashboardFragment())
+            binding.bottomNav.selectedItemId = R.id.nav_gm_dashboard
+        }
 
         binding.bottomNav.setOnItemSelectedListener { item ->
             when (item.itemId) {

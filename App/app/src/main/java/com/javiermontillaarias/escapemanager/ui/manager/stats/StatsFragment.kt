@@ -44,10 +44,10 @@ class StatsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.escapeRate.observe(viewLifecycleOwner) { state ->
-            if (state is Resource.Success) {
+            if (state is Resource.Success && state.data.isNotEmpty()) {
                 val data = state.data
                 val entries = data.mapIndexed { i, it -> BarEntry(i.toFloat(), it.rate.toFloat()) }
-                val labels = data.map { it.room }
+                val labels = data.map { it.room ?: "Sin nombre" }
                 val dataSet = BarDataSet(entries, "Tasa de escape (%)").apply {
                     color = Color.parseColor("#2E75B6")
                     valueTextSize = 10f
@@ -56,8 +56,11 @@ class StatsFragment : Fragment() {
                     this.data = BarData(dataSet)
                     xAxis.valueFormatter = IndexAxisValueFormatter(labels)
                     xAxis.granularity = 1f
+                    xAxis.setDrawGridLines(false)
+                    xAxis.labelRotationAngle = -30f
                     description.isEnabled = false
                     legend.isEnabled = false
+                    setFitBars(true)
                     animateY(1000)
                     invalidate()
                 }
@@ -65,10 +68,10 @@ class StatsFragment : Fragment() {
         }
 
         viewModel.hintsAvg.observe(viewLifecycleOwner) { state ->
-            if (state is Resource.Success) {
+            if (state is Resource.Success && state.data.isNotEmpty()) {
                 val data = state.data
                 val entries = data.mapIndexed { i, it -> BarEntry(i.toFloat(), it.average.toFloat()) }
-                val labels = data.map { it.room }
+                val labels = data.map { it.room ?: "Sin nombre" }
                 val dataSet = BarDataSet(entries, "Promedio pistas").apply {
                     color = Color.parseColor("#1F4E79")
                     valueTextSize = 10f
@@ -77,8 +80,10 @@ class StatsFragment : Fragment() {
                     this.data = BarData(dataSet)
                     xAxis.valueFormatter = IndexAxisValueFormatter(labels)
                     xAxis.granularity = 1f
+                    xAxis.setDrawGridLines(false)
                     description.isEnabled = false
                     legend.isEnabled = false
+                    setFitBars(true)
                     animateY(1000)
                     invalidate()
                 }

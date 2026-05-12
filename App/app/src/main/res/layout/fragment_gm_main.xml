@@ -40,6 +40,7 @@
         app:menu="@menu/menu_gm_bottom_nav"
         app:itemIconTint="@color/secondary"
         app:itemTextColor="@color/secondary"
+        app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

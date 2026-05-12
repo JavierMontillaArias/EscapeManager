@@ -18,11 +18,11 @@ class IncidentsAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(incident: Incident) {
-            binding.tvRoomName.text = "${incident.room?.name ?: "Sala #${incident.roomId}"}"
-            binding.tvDescription.text = incident.description
+            binding.tvRoomName.text = "${incident.sala?.name ?: "Sala #${incident.roomId}"}"
+            binding.tvDescription.text = incident.descripcion
             binding.tvDate.text = incident.createdAt?.take(10) ?: ""
 
-            if (incident.resolved) {
+            if (incident.resuelta) {
                 binding.tvStatus.text = "Resuelta"
                 binding.tvStatus.setBackgroundColor(Color.parseColor("#2E7D32"))
                 binding.btnResolve.visibility = View.GONE
