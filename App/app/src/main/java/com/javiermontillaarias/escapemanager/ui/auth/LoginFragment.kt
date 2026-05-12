@@ -46,6 +46,7 @@ class LoginFragment : Fragment() {
 
         viewModel.loginState.observe(viewLifecycleOwner) { state ->
             when (state) {
+                is Resource.Idle -> Unit
                 is Resource.Loading -> showLoading(true)
                 is Resource.Success -> {
                     showLoading(false)

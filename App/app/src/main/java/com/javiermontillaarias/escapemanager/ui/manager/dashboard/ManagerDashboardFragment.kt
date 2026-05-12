@@ -45,6 +45,7 @@ class ManagerDashboardFragment : Fragment() {
 
         viewModel.summary.observe(viewLifecycleOwner) { state ->
             when (state) {
+                is Resource.Idle -> Unit
                 is Resource.Loading -> {
                     binding.progressBar.visibility = View.VISIBLE
                     binding.tvError.visibility = View.GONE

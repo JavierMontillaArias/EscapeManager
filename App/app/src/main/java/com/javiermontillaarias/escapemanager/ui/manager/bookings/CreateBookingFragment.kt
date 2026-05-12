@@ -131,6 +131,7 @@ class CreateBookingViewModel(
                 is Resource.Success -> Resource.Success(result.data)
                 is Resource.Error -> Resource.Error(result.message)
                 is Resource.Loading -> Resource.Loading
+                is Resource.Idle -> Resource.Idle
             }
         }
     }

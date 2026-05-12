@@ -79,6 +79,7 @@ class RoomsFragment : Fragment() {
         viewModel.rooms.observe(viewLifecycleOwner) { state ->
             binding.swipeRefresh.isRefreshing = false
             when (state) {
+                is Resource.Idle -> Unit
                 is Resource.Loading -> binding.progressBar.visibility = View.VISIBLE
                 is Resource.Success -> {
                     binding.progressBar.visibility = View.GONE

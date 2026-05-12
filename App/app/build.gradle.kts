@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace = "com.javiermontillaarias.escapemanager"
-    compileSdk = 34
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.javiermontillaarias.escapemanager"
         minSdk = 26
-        targetSdk = 34
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
     }
@@ -35,25 +35,24 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.constraintlayout)
-
     implementation(libs.nav.fragment)
     implementation(libs.nav.ui)
-
     implementation(libs.lifecycle.viewmodel)
     implementation(libs.lifecycle.livedata)
     implementation(libs.lifecycle.runtime)
     implementation(libs.coroutines)
-
     implementation(libs.retrofit.core)
     implementation(libs.retrofit.gson)
     implementation(libs.okhttp)
     implementation(libs.okhttp.logging)
-
     implementation(libs.mlkit.barcode)
     implementation(libs.camera.camera2)
     implementation(libs.camera.lifecycle)
     implementation(libs.camera.view)
-
     implementation(libs.mpandroidchart)
     implementation(libs.swiperefresh)
+
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
 }

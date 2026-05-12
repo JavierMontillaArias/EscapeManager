@@ -19,9 +19,19 @@ object RetrofitClient {
             val logging = HttpLoggingInterceptor().apply {
                 level = HttpLoggingInterceptor.Level.BODY
             }
+
+            // API sin auth para el refresh token
+            val noAuthRetrofit = Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .client(OkHttpClient.Builder().addInterceptor(logging).build())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+            val noAuthApi = noAuthRetrofit.create(ApiService::class.java)
+
             val client = OkHttpClient.Builder()
                 .addInterceptor(AuthInterceptor(sessionManager))
                 .addInterceptor(logging)
+                .authenticator(TokenAuthenticator(sessionManager, noAuthApi))
                 .connectTimeout(30, TimeUnit.SECONDS)
                 .readTimeout(30, TimeUnit.SECONDS)
                 .build()

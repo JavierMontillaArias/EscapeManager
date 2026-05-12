@@ -1,4 +1,4 @@
-package com.javiermontillaarias.escapemanager.ui.manager.bookings
+package com.javiermontillaarias.escapemanager.ui.manager.incidents
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,52 +8,49 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.javiermontillaarias.escapemanager.R
 import com.javiermontillaarias.escapemanager.data.local.SessionManager
 import com.javiermontillaarias.escapemanager.data.network.RetrofitClient
-import com.javiermontillaarias.escapemanager.data.repository.BookingRepository
-import com.javiermontillaarias.escapemanager.databinding.FragmentBookingsBinding
-import com.javiermontillaarias.escapemanager.ui.adapters.BookingsAdapter
+import com.javiermontillaarias.escapemanager.data.repository.IncidentRepository
+import com.javiermontillaarias.escapemanager.databinding.FragmentIncidentsBinding
+import com.javiermontillaarias.escapemanager.ui.adapters.IncidentsAdapter
 import com.javiermontillaarias.escapemanager.util.Resource
 import com.google.android.material.snackbar.Snackbar
 
-class BookingsFragment : Fragment() {
+class IncidentsFragment : Fragment() {
 
-    private var _binding: FragmentBookingsBinding? = null
+    private var _binding: FragmentIncidentsBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: BookingsViewModel by viewModels {
+    private val viewModel: IncidentsViewModel by viewModels {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 val api = RetrofitClient.getApiService(SessionManager(requireContext()))
                 @Suppress("UNCHECKED_CAST")
-                return BookingsViewModel(BookingRepository(api)) as T
+                return IncidentsViewModel(IncidentRepository(api)) as T
             }
         }
     }
 
-    private lateinit var adapter: BookingsAdapter
+    private lateinit var adapter: IncidentsAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentBookingsBinding.inflate(inflater, container, false)
+        _binding = FragmentIncidentsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = BookingsAdapter { booking ->
-            val bundle = Bundle().apply { putInt("bookingId", booking.id) }
-            findNavController().navigate(R.id.bookingDetailFragment, bundle)
+        adapter = IncidentsAdapter { incident ->
+            viewModel.resolve(incident.id)
         }
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        viewModel.bookings.observe(viewLifecycleOwner) { state ->
+        viewModel.incidents.observe(viewLifecycleOwner) { state ->
             binding.swipeRefresh.isRefreshing = false
             when (state) {
                 is Resource.Idle -> Unit
@@ -71,22 +68,17 @@ class BookingsFragment : Fragment() {
             }
         }
 
-        binding.btnFilter.setOnClickListener {
-            val date = binding.etDateFilter.text.toString().trim()
-            if (date.isNotEmpty()) viewModel.loadBookings(date)
-            else Snackbar.make(binding.root, "Introduce una fecha", Snackbar.LENGTH_SHORT).show()
+        viewModel.resolveResult.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is Resource.Success ->
+                    Snackbar.make(binding.root, "Incidencia resuelta", Snackbar.LENGTH_SHORT).show()
+                is Resource.Error ->
+                    Snackbar.make(binding.root, state.message, Snackbar.LENGTH_LONG).show()
+                else -> Unit
+            }
         }
 
-        binding.btnClearFilter.setOnClickListener {
-            binding.etDateFilter.text?.clear()
-            viewModel.loadBookings(null)
-        }
-
-        binding.swipeRefresh.setOnRefreshListener { viewModel.loadBookings() }
-
-        binding.fab.setOnClickListener {
-            findNavController().navigate(R.id.createBookingFragment)
-        }
+        binding.swipeRefresh.setOnRefreshListener { viewModel.loadIncidents() }
     }
 
     override fun onDestroyView() {

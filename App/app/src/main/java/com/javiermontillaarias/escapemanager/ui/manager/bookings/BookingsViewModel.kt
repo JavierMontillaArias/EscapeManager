@@ -36,6 +36,7 @@ class BookingsViewModel(private val repository: BookingRepository) : ViewModel()
                 is Resource.Success -> { loadBookings(); Resource.Success(Unit) }
                 is Resource.Error -> Resource.Error(result.message)
                 is Resource.Loading -> Resource.Loading
+                is Resource.Idle -> Resource.Idle
             }
         }
     }

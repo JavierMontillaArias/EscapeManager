@@ -35,6 +35,7 @@ class RoomsViewModel(private val repository: RoomRepository) : ViewModel() {
                 is Resource.Success -> { loadRooms(); Resource.Success(Unit) }
                 is Resource.Error -> Resource.Error(result.message)
                 is Resource.Loading -> Resource.Loading
+                is Resource.Idle -> Resource.Idle
             }
         }
     }
@@ -47,6 +48,7 @@ class RoomsViewModel(private val repository: RoomRepository) : ViewModel() {
                 is Resource.Success -> { loadRooms(); Resource.Success(Unit) }
                 is Resource.Error -> Resource.Error(result.message)
                 is Resource.Loading -> Resource.Loading
+                is Resource.Idle -> Resource.Idle
             }
         }
     }
@@ -59,6 +61,7 @@ class RoomsViewModel(private val repository: RoomRepository) : ViewModel() {
                 is Resource.Success -> { loadRooms(); Resource.Success(Unit) }
                 is Resource.Error -> Resource.Error(result.message)
                 is Resource.Loading -> Resource.Loading
+                is Resource.Idle -> Resource.Idle
             }
         }
     }
