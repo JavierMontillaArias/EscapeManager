@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_gm_dashboard"
+        android:icon="@android:drawable/ic_menu_today"
+        android:title="Mis Partidas" />
+    <item
+        android:id="@+id/nav_scan_qr"
+        android:icon="@android:drawable/ic_menu_camera"
+        android:title="Escanear QR" />
+    <item
+        android:id="@+id/nav_gm_incidents"
+        android:icon="@android:drawable/ic_menu_report_image"
+        android:title="Incidencias" />
+</menu>

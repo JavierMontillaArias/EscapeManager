@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.javiermontillaarias.escapemanager.ui.auth.LoginFragment"
+        android:label="Login" />
+
+    <!-- Manager flow -->
+    <fragment
+        android:id="@+id/managerMainFragment"
+        android:name="com.javiermontillaarias.escapemanager.ui.manager.ManagerMainFragment"
+        android:label="Manager" />
+
+    <fragment
+        android:id="@+id/createEditRoomFragment"
+        android:name="com.javiermontillaarias.escapemanager.ui.manager.rooms.CreateEditRoomFragment"
+        android:label="Sala">
+        <argument
+            android:name="roomId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/bookingDetailFragment"
+        android:name="com.javiermontillaarias.escapemanager.ui.manager.bookings.BookingDetailFragment"
+        android:label="Detalle Reserva">
+        <argument
+            android:name="bookingId"
+            app:argType="integer" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/createBookingFragment"
+        android:name="com.javiermontillaarias.escapemanager.ui.manager.bookings.CreateBookingFragment"
+        android:label="Nueva Reserva" />
+
+    <!-- Game Master flow -->
+    <fragment
+        android:id="@+id/gmMainFragment"
+        android:name="com.javiermontillaarias.escapemanager.ui.gamemaster.GmMainFragment"
+        android:label="Game Master" />
+
+    <fragment
+        android:id="@+id/qrScannerFragment"
+        android:name="com.javiermontillaarias.escapemanager.ui.gamemaster.qrscanner.QrScannerFragment"
+        android:label="Escanear QR" />
+
+    <fragment
+        android:id="@+id/activeGameFragment"
+        android:name="com.javiermontillaarias.escapemanager.ui.gamemaster.activegame.ActiveGameFragment"
+        android:label="Partida Activa">
+        <argument
+            android:name="gameId"
+            app:argType="integer" />
+        <argument
+            android:name="groupName"
+            app:argType="string" />
+        <argument
+            android:name="roomName"
+            app:argType="string"
+            android:defaultValue="" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/createIncidentFragment"
+        android:name="com.javiermontillaarias.escapemanager.ui.gamemaster.incidents.CreateIncidentFragment"
+        android:label="Nueva Incidencia" />
+</navigation>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">EscapeManager</string>
+    <string name="login">Iniciar sesión</string>
+    <string name="email">Email</string>
+    <string name="password">Contraseña</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="rooms">Salas</string>
+    <string name="bookings">Reservas</string>
+    <string name="stats">Estadísticas</string>
+    <string name="incidents">Incidencias</string>
+    <string name="scan_qr">Escanear QR</string>
+    <string name="active_game">Partida Activa</string>
+    <string name="loading">Cargando...</string>
+    <string name="error_network">Error de conexión. Verifica tu red.</string>
+    <string name="error_credentials">Credenciales incorrectas</string>
+    <string name="logout">Cerrar sesión</string>
+    <string name="save">Guardar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="delete">Eliminar</string>
+    <string name="confirm">Confirmar</string>
+    <string name="create_booking">Crear Reserva</string>
+    <string name="create_room">Crear Sala</string>
+    <string name="create_incident">Crear Incidencia</string>
+    <string name="hints_used">Pistas usadas</string>
+    <string name="close_game">Cerrar partida</string>
+    <string name="escaped_yes">¡Escaparon!</string>
+    <string name="escaped_no">No escaparon</string>
+    <string name="game_time">Tiempo de partida</string>
+    <string name="resolve">Resolver</string>
+</resources>

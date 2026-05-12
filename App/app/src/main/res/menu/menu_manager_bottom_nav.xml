@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_dashboard"
+        android:icon="@android:drawable/ic_menu_today"
+        android:title="Dashboard" />
+    <item
+        android:id="@+id/nav_rooms"
+        android:icon="@android:drawable/ic_menu_mapmode"
+        android:title="Salas" />
+    <item
+        android:id="@+id/nav_bookings"
+        android:icon="@android:drawable/ic_menu_agenda"
+        android:title="Reservas" />
+    <item
+        android:id="@+id/nav_stats"
+        android:icon="@android:drawable/ic_menu_info_details"
+        android:title="Stats" />
+    <item
+        android:id="@+id/nav_incidents"
+        android:icon="@android:drawable/ic_menu_report_image"
+        android:title="Incidencias" />
+</menu>
