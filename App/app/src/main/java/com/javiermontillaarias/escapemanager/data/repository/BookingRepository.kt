@@ -10,6 +10,9 @@ class BookingRepository(private val api: ApiService) {
     suspend fun getBookings(date: String? = null): Resource<List<Booking>> =
         safeCall { api.getBookings(date) }
 
+    suspend fun getBooking(id: Int): Resource<Booking> =
+        safeCall { api.getBooking(id) }
+
     suspend fun createBooking(request: BookingRequest): Resource<Booking> =
         safeCall { api.createBooking(request) }
 

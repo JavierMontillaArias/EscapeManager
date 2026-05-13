@@ -59,21 +59,25 @@ data class Booking(
     @SerializedName("sala_id") val roomId: Int,
     @SerializedName("nombre_grupo") val groupName: String,
     @SerializedName("num_personas") val numPeople: Int,
-    val email: String,
+    @SerializedName("email_cliente") val email: String,
     val fecha: String,
-    val hora: String,
+    @SerializedName("hora_inicio") val hora: String,
+    @SerializedName("hora_fin") val horaFin: String? = null,
     val estado: String,
     @SerializedName("qr_token") val qrToken: String? = null,
-    val sala: Room? = null
+    @SerializedName("qr_usado") val qrUsado: Boolean = false,
+    val sala: Room? = null,
+    @SerializedName("created_at") val createdAt: String? = null
 )
 
 data class BookingRequest(
     @SerializedName("sala_id") val roomId: Int,
     @SerializedName("nombre_grupo") val groupName: String,
     @SerializedName("num_personas") val numPeople: Int,
-    val email: String,
+    @SerializedName("email_cliente") val email: String,
     val fecha: String,
-    val hora: String
+    @SerializedName("hora_inicio") val horaInicio: String,
+    @SerializedName("hora_fin") val horaFin: String
 )
 
 // ── QR ────────────────────────────────────────────────────────────────────────

@@ -36,6 +36,9 @@ interface ApiService {
     @GET("bookings")
     suspend fun getBookings(@Query("date") date: String? = null): Response<List<Booking>>
 
+    @GET("bookings/{id}")
+    suspend fun getBooking(@Path("id") id: Int): Response<Booking>
+
     @POST("bookings")
     suspend fun createBooking(@Body request: BookingRequest): Response<Booking>
 
