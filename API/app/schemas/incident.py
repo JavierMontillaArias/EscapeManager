@@ -2,6 +2,13 @@ from pydantic import BaseModel, ConfigDict, Field
 from datetime import datetime
 
 
+class IncidentRoomInfo(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    nombre: str
+
+
 class IncidentCreate(BaseModel):
     sala_id: int = Field(ge=1)
     descripcion: str = Field(min_length=10, max_length=1000)
@@ -17,6 +24,7 @@ class IncidentResponse(BaseModel):
     fecha: datetime
     resuelta: bool
     fecha_resolucion: datetime | None
+    sala: IncidentRoomInfo | None = None
 
 
 class IncidentResolveResponse(BaseModel):

@@ -18,7 +18,7 @@ class RoomsAdapter(
 
         fun bind(room: Room) {
             binding.tvRoomName.text = room.name
-            binding.tvRoomTheme.text = "${room.theme}"
+            binding.tvRoomTheme.text = room.theme
             binding.tvCapacity.text = "${room.capacity} personas"
             binding.tvDifficulty.text = room.dificultad.replaceFirstChar { it.uppercase() }
             binding.btnEdit.setOnClickListener { onEdit(room) }

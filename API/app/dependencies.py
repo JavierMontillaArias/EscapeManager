@@ -1,7 +1,7 @@
 from fastapi import HTTPException, Depends
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from jose import jwt, JWTError
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from starlette import status
 
 from app.config import settings
@@ -22,7 +22,7 @@ def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(oauth2_
     )
 
     try:
-        token = credentials.credentials  # extrae el token del objeto
+        token = credentials.credentials
         payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
         user_id_str: str | None = payload.get("sub")
 
@@ -44,6 +44,7 @@ def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(oauth2_
 
     user = (
         db.query(User)
+        .options(joinedload(User.rol))
         .filter(User.id == user_id, User.activo == True)
         .first()
     )
@@ -70,12 +71,4 @@ def require_gamemaster(current_user: User = Depends(get_current_user)) -> User:
         )
     return current_user
 
-
-def require_manager_or_gamemaster(current_user: User = Depends(get_current_user)) -> User:
-    allowed_roles = {ROLE_MANAGER, ROLE_GAMEMASTER}
-    if current_user.rol.nombre not in allowed_roles:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="Acceso no autorizado",
-        )
-    return current_user
+# M8: require_manager_or_gamemaster eliminada — era código muerto (ningún router la usaba)

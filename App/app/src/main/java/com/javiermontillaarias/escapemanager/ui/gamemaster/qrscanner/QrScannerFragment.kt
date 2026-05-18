@@ -3,6 +3,7 @@ package com.javiermontillaarias.escapemanager.ui.gamemaster.qrscanner
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,20 +16,24 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.javiermontillaarias.escapemanager.R
-import com.javiermontillaarias.escapemanager.data.local.SessionManager
-import com.javiermontillaarias.escapemanager.data.network.RetrofitClient
-import com.javiermontillaarias.escapemanager.data.repository.GameRepository
-import com.javiermontillaarias.escapemanager.databinding.FragmentQrScannerBinding
-import com.javiermontillaarias.escapemanager.util.Resource
 import com.google.android.material.snackbar.Snackbar
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
+import com.javiermontillaarias.escapemanager.EscapeManagerApp
+import com.javiermontillaarias.escapemanager.R
+import com.javiermontillaarias.escapemanager.data.network.RetrofitClient
+import com.javiermontillaarias.escapemanager.data.repository.GameRepository
+import com.javiermontillaarias.escapemanager.databinding.FragmentQrScannerBinding
+import com.javiermontillaarias.escapemanager.util.Resource
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 class QrScannerFragment : Fragment() {
+
+    companion object {
+        private const val TAG = "QrScannerFragment"
+    }
 
     private var _binding: FragmentQrScannerBinding? = null
     private val binding get() = _binding!!
@@ -36,7 +41,9 @@ class QrScannerFragment : Fragment() {
     private val viewModel: QrScannerViewModel by viewModels {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                val api = RetrofitClient.getApiService(SessionManager(requireContext()))
+                // B-03: singleton SessionManager desde la Application
+                val sm = (requireActivity().application as EscapeManagerApp).sessionManager
+                val api = RetrofitClient.getApiService(sm)
                 @Suppress("UNCHECKED_CAST")
                 return QrScannerViewModel(GameRepository(api)) as T
             }
@@ -45,12 +52,13 @@ class QrScannerFragment : Fragment() {
 
     private lateinit var cameraExecutor: ExecutorService
     private var cameraProvider: ProcessCameraProvider? = null
+    private val barcodeScanner = BarcodeScanning.getClient()
 
     private val permissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { granted ->
         if (granted) startCamera()
-        else Snackbar.make(binding.root, "Permiso de cámara necesario", Snackbar.LENGTH_LONG).show()
+        else Snackbar.make(binding.root, getString(R.string.camera_permission_required), Snackbar.LENGTH_LONG).show()
     }
 
     override fun onCreateView(
@@ -80,8 +88,9 @@ class QrScannerFragment : Fragment() {
                     val data = state.data
                     val bundle = Bundle().apply {
                         putInt("gameId", data.gameId)
-                        putString("groupName", data.booking.groupName)
-                        putString("roomName", data.booking.sala?.name ?: "")
+                        putString("groupName", data.nombreGrupo)
+                        putString("roomName", data.sala)
+                        putString("startTime", data.startTime)
                     }
                     findNavController().navigate(R.id.activeGameFragment, bundle)
                     viewModel.resetState()
@@ -130,7 +139,8 @@ class QrScannerFragment : Fragment() {
                 imageAnalysis
             )
         } catch (e: Exception) {
-            e.printStackTrace()
+            Log.e(TAG, "Error al vincular casos de uso de la cámara", e)
+            Snackbar.make(binding.root, getString(R.string.camera_error), Snackbar.LENGTH_LONG).show()
         }
     }
 
@@ -138,16 +148,16 @@ class QrScannerFragment : Fragment() {
     private fun processImage(imageProxy: ImageProxy) {
         val mediaImage = imageProxy.image ?: run { imageProxy.close(); return }
         val image = InputImage.fromMediaImage(mediaImage, imageProxy.imageInfo.rotationDegrees)
-        val scanner = BarcodeScanning.getClient()
 
-        scanner.process(image)
+        barcodeScanner.process(image)
             .addOnSuccessListener { barcodes ->
                 for (barcode in barcodes) {
                     if (barcode.format == Barcode.FORMAT_QR_CODE) {
                         val rawValue = barcode.rawValue ?: continue
-                        requireActivity().runOnUiThread {
-                            viewModel.validateQr(rawValue)
-                        }
+                        // B-02: llamada directa a validateQr — viewModelScope usa Main dispatcher,
+                        // no necesita runOnUiThread. activity? evita crash si el Fragment se destruyó.
+                        activity ?: return@addOnSuccessListener
+                        viewModel.validateQr(rawValue)
                         break
                     }
                 }
@@ -167,7 +177,13 @@ class QrScannerFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        cameraExecutor.shutdown()
-        _binding = null
+        try {
+            // B-07: desvincular cámara antes de cerrar el executor para evitar frames huérfanos
+            cameraProvider?.unbindAll()
+            cameraExecutor.shutdownNow()
+            barcodeScanner.close()
+        } finally {
+            _binding = null
+        }
     }
 }

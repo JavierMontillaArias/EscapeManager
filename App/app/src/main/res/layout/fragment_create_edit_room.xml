@@ -115,7 +115,17 @@
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:background="@drawable/bg_spinner"
-                        android:layout_marginBottom="24dp" />
+                        android:layout_marginBottom="16dp" />
+
+                    <!-- INC-06: toggle para activar/desactivar sala en edición -->
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/switchActiva"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Sala activa"
+                        android:checked="true"
+                        android:layout_marginBottom="24dp"
+                        android:visibility="gone" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnSave"

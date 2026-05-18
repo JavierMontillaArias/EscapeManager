@@ -6,14 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.viewModelFactory
-import com.javiermontillaarias.escapemanager.data.local.SessionManager
-import com.javiermontillaarias.escapemanager.data.model.Incident
+import com.google.android.material.snackbar.Snackbar
+import com.javiermontillaarias.escapemanager.EscapeManagerApp
 import com.javiermontillaarias.escapemanager.data.model.IncidentRequest
 import com.javiermontillaarias.escapemanager.data.model.Room
 import com.javiermontillaarias.escapemanager.data.network.RetrofitClient
@@ -21,8 +18,6 @@ import com.javiermontillaarias.escapemanager.data.repository.IncidentRepository
 import com.javiermontillaarias.escapemanager.data.repository.RoomRepository
 import com.javiermontillaarias.escapemanager.databinding.FragmentCreateIncidentBinding
 import com.javiermontillaarias.escapemanager.util.Resource
-import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.launch
 
 class CreateIncidentFragment : Fragment() {
 
@@ -31,10 +26,16 @@ class CreateIncidentFragment : Fragment() {
 
     private var rooms: List<Room> = emptyList()
 
-    private val viewModel by lazy {
-        val sm = SessionManager(requireContext())
-        val api = RetrofitClient.getApiService(sm)
-        CreateIncidentViewModel(IncidentRepository(api), RoomRepository(api))
+    private val viewModel: CreateIncidentViewModel by viewModels {
+        object : ViewModelProvider.Factory {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                // B-03: singleton SessionManager desde la Application
+                val sm = (requireActivity().application as EscapeManagerApp).sessionManager
+                val api = RetrofitClient.getApiService(sm)
+                @Suppress("UNCHECKED_CAST")
+                return CreateIncidentViewModel(IncidentRepository(api), RoomRepository(api)) as T
+            }
+        }
     }
 
     override fun onCreateView(
@@ -47,17 +48,26 @@ class CreateIncidentFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // BUG-03: manejar Error y Loading para feedback al usuario
         viewModel.rooms.observe(viewLifecycleOwner) { state ->
-            if (state is Resource.Success) {
-                rooms = state.data
-                val names = rooms.map { it.name }
-                binding.spinnerRoom.adapter = ArrayAdapter(
-                    requireContext(), android.R.layout.simple_spinner_item, names
-                ).also { it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item) }
+            when (state) {
+                is Resource.Success -> {
+                    rooms = state.data
+                    val names = rooms.map { it.name }
+                    binding.spinnerRoom.adapter = ArrayAdapter(
+                        requireContext(), android.R.layout.simple_spinner_item, names
+                    ).also { it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item) }
+                }
+                is Resource.Error -> Snackbar.make(
+                    binding.root, "Error al cargar salas: ${state.message}", Snackbar.LENGTH_LONG
+                ).setAction("Reintentar") { viewModel.loadRooms() }.show()
+                is Resource.Loading -> { /* carga inicial silenciosa */ }
+                else -> Unit
             }
         }
 
         viewModel.createResult.observe(viewLifecycleOwner) { state ->
+            binding.btnSubmit.isEnabled = state !is Resource.Loading
             when (state) {
                 is Resource.Success -> {
                     Snackbar.make(binding.root, "Incidencia reportada", Snackbar.LENGTH_SHORT).show()
@@ -70,8 +80,9 @@ class CreateIncidentFragment : Fragment() {
 
         binding.btnSubmit.setOnClickListener {
             val description = binding.etDescription.text.toString().trim()
-            if (description.isEmpty()) {
-                Snackbar.make(binding.root, "Escribe una descripción", Snackbar.LENGTH_SHORT).show()
+            // I-03: alineado con min_length=10 de la API
+            if (description.length < 10) {
+                Snackbar.make(binding.root, "La descripción debe tener al menos 10 caracteres", Snackbar.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
             if (rooms.isEmpty()) return@setOnClickListener
@@ -83,28 +94,5 @@ class CreateIncidentFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-}
-
-class CreateIncidentViewModel(
-    private val incidentRepo: IncidentRepository,
-    private val roomRepo: RoomRepository
-) : ViewModel() {
-
-    private val _rooms = MutableLiveData<Resource<List<Room>>>()
-    val rooms: LiveData<Resource<List<Room>>> = _rooms
-
-    private val _createResult = MutableLiveData<Resource<Incident>>()
-    val createResult: LiveData<Resource<Incident>> = _createResult
-
-    init {
-        viewModelScope.launch { _rooms.value = roomRepo.getRooms() }
-    }
-
-    fun createIncident(request: IncidentRequest) {
-        viewModelScope.launch {
-            _createResult.value = Resource.Loading
-            _createResult.value = incidentRepo.createIncident(request)
-        }
     }
 }

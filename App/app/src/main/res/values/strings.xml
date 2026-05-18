@@ -28,4 +28,15 @@
     <string name="escaped_no">No escaparon</string>
     <string name="game_time">Tiempo de partida</string>
     <string name="resolve">Resolver</string>
+    <string name="welcome_manager">Bienvenido, %s</string>
+    <string name="welcome_gm">Hola, %s</string>
+    <string name="edit_room">Editar Sala</string>
+    <string name="camera_permission_required">Permiso de cámara necesario</string>
+    <string name="stats_escape_rate">Tasa de escape (%%)</string>
+    <string name="stats_hints_avg">Promedio de pistas</string>
+    <string name="camera_error">No se pudo iniciar la cámara</string>
+    <string name="error_hora_invalida">Formato de hora inválido (HH:MM)</string>
+    <string name="error_fecha_invalida">Formato de fecha inválido (YYYY-MM-DD)</string>
+    <string name="error_personas">El número de personas debe ser mayor que 0</string>
+    <string name="error_horas">La hora de fin debe ser posterior a la de inicio</string>
 </resources>

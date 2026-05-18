@@ -5,8 +5,11 @@ from fastapi import FastAPI, Request, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.security import HTTPBearer
+from slowapi import _rate_limit_exceeded_handler
+from slowapi.errors import RateLimitExceeded
 
 from app.config import settings
+from app.limiter import limiter
 from app.routers import auth, users, rooms, bookings, qr, games, incidents, stats
 
 logging.basicConfig(
@@ -19,6 +22,20 @@ logger = logging.getLogger(__name__)
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     logger.info("EscapeManager API arrancando en modo '%s'", settings.ENVIRONMENT)
+    # S-05: advertir si CORS está abierto a cualquier origen
+    if "*" in settings.ALLOWED_ORIGINS:
+        logger.warning(
+            "S-05: CORS configurado con wildcard '*'. "
+            "Restringe ALLOWED_ORIGINS antes de desplegar en producción."
+        )
+    # S-06: advertir si las credenciales SMTP no están configuradas
+    if not settings.SMTP_USER or not settings.SMTP_PASSWORD:
+        logger.warning(
+            "S-06: Credenciales SMTP vacías (SMTP_USER / SMTP_PASSWORD). "
+            "El envío de emails de confirmación no funcionará."
+        )
+    if not settings.SMTP_FROM:
+        logger.warning("SMTP_FROM vacío. Los emails pueden ser rechazados por el servidor SMTP.")
     yield
     logger.info("EscapeManager API apagándose")
 
@@ -31,12 +48,16 @@ app = FastAPI(
     swagger_ui_parameters={"persistAuthorization": True},
 )
 
+# A11: rate limiting global con slowapi
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"] if settings.ENVIRONMENT == "development" else [],
+    allow_origins=settings.ALLOWED_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
-    allow_headers=["*"],
+    allow_headers=["Authorization", "Content-Type"],
 )
 
 

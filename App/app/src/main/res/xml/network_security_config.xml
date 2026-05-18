@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!-- Sin domain-config: solo HTTPS en release.
+         La excepción de debug para 10.0.2.2 está en app/src/debug/res/xml/network_security_config.xml -->
+</network-security-config>

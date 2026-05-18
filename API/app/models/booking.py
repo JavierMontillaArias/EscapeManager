@@ -33,10 +33,10 @@ class Booking(Base):
         SAEnum(EstadoReserva, name="estado_reserva_enum"),
         default=EstadoReserva.pendiente,
         nullable=False,
+        index=True,  # PERF-03: acelera queries de estadísticas que filtran por estado
     )
 
     # MySQL no tiene tipo UUID nativo → String(36) en formato estándar
-    # Ejemplo: "550e8400-e29b-41d4-a716-446655440000"
     qr_token: Mapped[str] = mapped_column(
         String(36),
         default=lambda: str(uuid.uuid4()),
@@ -45,6 +45,11 @@ class Booking(Base):
         index=True,
     )
     qr_usado: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
+
+    # PR-02: Indica si el email de confirmación con el QR fue enviado con éxito.
+    # Permite al Manager detectar envíos fallidos y usar el endpoint /resend-qr.
+    qr_enviado: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
+
     created_at: Mapped[datetime] = mapped_column(
         DateTime,
         server_default=func.now(),

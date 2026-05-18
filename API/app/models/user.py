@@ -31,5 +31,9 @@ class User(Base):
     partidas: Mapped[list["Game"]] = relationship("Game", back_populates="gamemaster")
     incidencias: Mapped[list["Incident"]] = relationship("Incident", back_populates="usuario")
 
+    @property
+    def rol_nombre(self) -> str:
+        return self.rol.nombre if self.rol else ""
+
     def __repr__(self) -> str:
         return f"<User id={self.id} email={self.email!r}>"

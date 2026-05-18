@@ -34,18 +34,3 @@ def generate_qr_image(token: str) -> bytes:
     buffer.seek(0)
     return buffer.read()
 
-def generate_qr_simple(token: str) -> bytes:
-    """
-    Versión simplificada sin StyledPilImage.
-    Úsala como fallback si la versión con estilos da problemas.
-    """
-
-    qr = qrcode.QRCode(error_correction=qrcode.constants.ERROR_CORRECT_M, box_size=10, border=4)
-    qr.add_data(token)
-    qr.make(fit=True)
-
-    img = qr.make_image(fill_color="black", back_color="white")
-    buffer = io.BytesIO()
-    img.save(buffer, format="PNG")
-    buffer.seek(0)
-    return buffer.read()

@@ -1,3 +1,4 @@
+import warnings
 from functools import lru_cache
 from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -22,6 +23,19 @@ class Settings(BaseSettings):
 
     # ── General ────────────────────────────────────────────────
     ENVIRONMENT: str = "development"
+    ALLOWED_ORIGINS: list[str] = ["http://localhost:8000"]
+
+    # B-05: Zona horaria del negocio para validación QR.
+    # Las horas de reserva se almacenan en hora local; el servidor debe
+    # usar la misma zona horaria para que la ventana ±15 min sea correcta.
+    TIMEZONE: str = "UTC"
+
+    @field_validator("SECRET_KEY")
+    @classmethod
+    def validate_secret_key(cls, v: str) -> str:
+        if len(v) < 32:
+            raise ValueError("SECRET_KEY debe tener al menos 32 caracteres para garantizar seguridad JWT")
+        return v
 
     @field_validator("DATABASE_URL")
     @classmethod
@@ -33,6 +47,18 @@ class Settings(BaseSettings):
         """
         if v.startswith("mysql://"):
             v = v.replace("mysql://", "mysql+pymysql://", 1)
+        return v
+
+    # S-05: Advertir si ALLOWED_ORIGINS contiene wildcard o solo localhost en producción.
+    @field_validator("ALLOWED_ORIGINS")
+    @classmethod
+    def validate_origins(cls, v: list[str]) -> list[str]:
+        if "*" in v:
+            warnings.warn(
+                "CORS wildcard '*' no es seguro para producción. "
+                "Configura ALLOWED_ORIGINS con dominios específicos.",
+                stacklevel=2,
+            )
         return v
 
     model_config = SettingsConfigDict(

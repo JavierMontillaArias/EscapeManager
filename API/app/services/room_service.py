@@ -1,6 +1,9 @@
 from typing import Optional
+
+from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 
+from app.models.booking import Booking, EstadoReserva
 from app.models.room import Room
 from app.schemas.room import RoomCreate, RoomUpdate
 
@@ -24,9 +27,13 @@ def create_room(db: Session, data: RoomCreate) -> Room:
         dificultad=data.dificultad,
         activa=True,
     )
-    db.add(room)
-    db.commit()
-    db.refresh(room)
+    try:
+        db.add(room)
+        db.commit()
+        db.refresh(room)
+    except SQLAlchemyError:
+        db.rollback()
+        raise
     return room
 
 
@@ -36,11 +43,36 @@ def update_room(db: Session, room_id: int, data: RoomUpdate) -> Optional[Room]:
         return None
 
     update_data = data.model_dump(exclude_unset=True)
+
+    # SEC-02: Bloquear desactivación vía PUT si hay reservas activas,
+    # igual que deactivate_room() hace para DELETE.
+    if update_data.get("activa") is False and room.activa:
+        future_bookings = (
+            db.query(Booking)
+            .filter(
+                Booking.sala_id == room_id,
+                Booking.estado.in_([
+                    EstadoReserva.confirmada,
+                    EstadoReserva.pendiente,
+                    EstadoReserva.en_curso,
+                ]),
+            )
+            .count()
+        )
+        if future_bookings > 0:
+            raise ValueError(
+                "No se puede desactivar una sala con reservas activas, pendientes o en curso"
+            )
+
     for field, value in update_data.items():
         setattr(room, field, value)
 
-    db.commit()
-    db.refresh(room)
+    try:
+        db.commit()
+        db.refresh(room)
+    except SQLAlchemyError:
+        db.rollback()
+        raise
     return room
 
 
@@ -49,19 +81,29 @@ def deactivate_room(db: Session, room_id: int) -> Optional[Room]:
     if room is None:
         return None
 
-    from app.models.booking import Booking, EstadoReserva
-    active_bookings = (
+    # B-10: Bloquear desactivación si hay reservas confirmadas, pendientes o en curso.
+    future_bookings = (
         db.query(Booking)
         .filter(
             Booking.sala_id == room_id,
-            Booking.estado == EstadoReserva.en_curso,
+            Booking.estado.in_([
+                EstadoReserva.confirmada,
+                EstadoReserva.pendiente,
+                EstadoReserva.en_curso,
+            ]),
         )
         .count()
     )
-    if active_bookings > 0:
-        raise ValueError("No se puede desactivar una sala con partidas en curso")
+    if future_bookings > 0:
+        raise ValueError(
+            "No se puede desactivar una sala con reservas activas, pendientes o en curso"
+        )
 
     room.activa = False
-    db.commit()
-    db.refresh(room)
+    try:
+        db.commit()
+        db.refresh(room)
+    except SQLAlchemyError:
+        db.rollback()
+        raise
     return room

@@ -19,3 +19,19 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+-keepclassmembers class com.javiermontillaarias.escapemanager.data.model.** { *; }
+-keep class com.javiermontillaarias.escapemanager.data.model.** { *; }
+
+-keep,allowobfuscation,allowshrinking interface retrofit2.Call
+-keep,allowobfuscation,allowshrinking class retrofit2.Response
+-dontwarn retrofit2.**
+-keepattributes Signature
+-keepattributes *Annotation*
+-keepattributes Exceptions
+
+-dontwarn okhttp3.**
+-dontwarn okio.**
+
+-keep class com.google.gson.** { *; }
+-keepattributes EnclosingMethod

@@ -8,11 +8,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.javiermontillaarias.escapemanager.data.local.SessionManager
 import com.javiermontillaarias.escapemanager.data.network.RetrofitClient
 import com.javiermontillaarias.escapemanager.data.repository.StatsRepository
 import com.javiermontillaarias.escapemanager.databinding.FragmentManagerDashboardBinding
 import com.javiermontillaarias.escapemanager.util.Resource
+import com.javiermontillaarias.escapemanager.util.appSessionManager
 
 class ManagerDashboardFragment : Fragment() {
 
@@ -22,8 +22,7 @@ class ManagerDashboardFragment : Fragment() {
     private val viewModel: ManagerDashboardViewModel by viewModels {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                val sm = SessionManager(requireContext())
-                val api = RetrofitClient.getApiService(sm)
+                val api = RetrofitClient.getApiService(appSessionManager)
                 @Suppress("UNCHECKED_CAST")
                 return ManagerDashboardViewModel(StatsRepository(api)) as T
             }
@@ -40,8 +39,7 @@ class ManagerDashboardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val sm = SessionManager(requireContext())
-        binding.tvWelcome.text = "Bienvenido, ${sm.userName ?: "Manager"}"
+        binding.tvWelcome.text = "Bienvenido, ${appSessionManager.userName ?: "Manager"}"
 
         viewModel.summary.observe(viewLifecycleOwner) { state ->
             when (state) {
@@ -53,9 +51,9 @@ class ManagerDashboardFragment : Fragment() {
                 is Resource.Success -> {
                     binding.progressBar.visibility = View.GONE
                     val data = state.data
-                    binding.tvTotalBookings.text = data.totalBookings.toString()
-                    binding.tvActiveGames.text = data.activeGames.toString()
-                    binding.tvTotalRooms.text = data.totalRooms.toString()
+                    binding.tvTotalBookings.text    = data.totalBookings.toString()
+                    binding.tvActiveGames.text      = data.activeGames.toString()
+                    binding.tvTotalRooms.text       = data.totalRooms.toString()
                     binding.tvPendingIncidents.text = data.pendingIncidents.toString()
                 }
                 is Resource.Error -> {
@@ -65,6 +63,11 @@ class ManagerDashboardFragment : Fragment() {
                 }
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.loadSummary()
     }
 
     override fun onDestroyView() {

@@ -1,6 +1,4 @@
-from pydantic import BaseModel, Field
-from datetime import date
-
+from pydantic import BaseModel, Field, ConfigDict
 
 class EscapeRateItem(BaseModel):
     sala_id: int
@@ -17,6 +15,8 @@ class HintsAvgItem(BaseModel):
     promedio_pistas: float
 
 
+# M2: eliminados serialization_alias no usados para evitar confusión futura
+# La App mapea los nombres originales: franja, total_reservas, porcentaje
 class OccupancyItem(BaseModel):
     franja: str
     total_reservas: int
@@ -40,3 +40,5 @@ class SummaryResponse(BaseModel):
     sala_mas_popular: str | None
     reservas_hoy: int
     partidas_en_curso: int
+    total_salas: int
+    incidencias_pendientes: int

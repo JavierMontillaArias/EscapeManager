@@ -4,25 +4,23 @@ import com.javiermontillaarias.escapemanager.data.model.Room
 import com.javiermontillaarias.escapemanager.data.model.RoomRequest
 import com.javiermontillaarias.escapemanager.data.network.ApiService
 import com.javiermontillaarias.escapemanager.util.Resource
+import com.javiermontillaarias.escapemanager.util.safeApiCall
 
 class RoomRepository(private val api: ApiService) {
 
-    suspend fun getRooms(): Resource<List<Room>> = safeCall { api.getRooms() }
+    suspend fun getRooms(soloActivas: Boolean? = null): Resource<List<Room>> =
+        safeApiCall { api.getRooms(soloActivas) }
 
-    suspend fun createRoom(request: RoomRequest): Resource<Room> = safeCall { api.createRoom(request) }
+    suspend fun getActiveRooms(): Resource<List<Room>> =
+        safeApiCall { api.getActiveRooms() }
+
+    suspend fun createRoom(request: RoomRequest): Resource<Room> =
+        safeApiCall { api.createRoom(request) }
 
     suspend fun updateRoom(id: Int, request: RoomRequest): Resource<Room> =
-        safeCall { api.updateRoom(id, request) }
+        safeApiCall { api.updateRoom(id, request) }
 
-    suspend fun deleteRoom(id: Int): Resource<Unit> = safeCall { api.deleteRoom(id) }
-
-    private suspend fun <T> safeCall(call: suspend () -> retrofit2.Response<T>): Resource<T> {
-        return try {
-            val response = call()
-            if (response.isSuccessful) Resource.Success(response.body()!!)
-            else Resource.Error("Error ${response.code()}: ${response.message()}")
-        } catch (e: Exception) {
-            Resource.Error("Error de conexión: ${e.message}")
-        }
-    }
+    // I-06: Resource<Room> para que la UI pueda actualizar el item borrado
+    suspend fun deleteRoom(id: Int): Resource<Room> =
+        safeApiCall { api.deleteRoom(id) }
 }

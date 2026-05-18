@@ -1,7 +1,8 @@
 from datetime import datetime, timezone
 from typing import Optional
 
-from sqlalchemy.orm import Session
+from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.orm import Session, joinedload
 
 from app.models.incident import Incident
 from app.models.room import Room
@@ -9,17 +10,19 @@ from app.models.user import User
 from app.schemas.incident import IncidentCreate
 
 
-def get_incidents(db: Session, current_user: User) -> list[Incident]:
-    query = db.query(Incident)
+def get_incidents(db: Session, current_user: User, skip: int = 0, limit: int = 200) -> list[Incident]:
+    query = db.query(Incident).options(joinedload(Incident.sala))
     if current_user.rol.nombre == "Game Master":
         query = query.filter(Incident.usuario_id == current_user.id)
-    return query.order_by(Incident.fecha.desc()).all()
+    return query.order_by(Incident.fecha.desc()).offset(skip).limit(limit).all()
 
 
 def create_incident(db: Session, data: IncidentCreate, current_user: User) -> Incident:
     room = db.query(Room).filter(Room.id == data.sala_id).first()
     if room is None:
         raise ValueError(f"La sala con ID {data.sala_id} no existe")
+    if not room.activa:
+        raise ValueError(f"La sala '{room.nombre}' no está activa")
 
     incident = Incident(
         sala_id=data.sala_id,
@@ -28,9 +31,14 @@ def create_incident(db: Session, data: IncidentCreate, current_user: User) -> In
         resuelta=False,
         fecha_resolucion=None,
     )
-    db.add(incident)
-    db.commit()
-    db.refresh(incident)
+    try:
+        db.add(incident)
+        db.commit()
+        db.refresh(incident)
+    except SQLAlchemyError:
+        db.rollback()
+        raise
+
     return incident
 
 
@@ -43,8 +51,14 @@ def resolve_incident(db: Session, incident_id: int) -> Optional[Incident]:
         raise ValueError("Esta incidencia ya está marcada como resuelta")
 
     incident.resuelta = True
-    incident.fecha_resolucion = datetime.now()
+    # A5: .replace(tzinfo=None) para almacenar UTC naive en MySQL DateTime
+    incident.fecha_resolucion = datetime.now(timezone.utc).replace(tzinfo=None)
 
-    db.commit()
-    db.refresh(incident)
+    try:
+        db.commit()
+        db.refresh(incident)
+    except SQLAlchemyError:
+        db.rollback()
+        raise
+
     return incident

@@ -12,3 +12,4 @@ python-dotenv>=1.0.0
 python-multipart>=0.0.9
 qrcode[pil]>=7.4.2
 Pillow>=10.3.0
+slowapi>=0.1.9

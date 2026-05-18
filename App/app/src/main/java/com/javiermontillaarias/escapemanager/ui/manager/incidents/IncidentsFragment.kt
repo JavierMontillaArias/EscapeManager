@@ -9,12 +9,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.javiermontillaarias.escapemanager.data.local.SessionManager
 import com.javiermontillaarias.escapemanager.data.network.RetrofitClient
 import com.javiermontillaarias.escapemanager.data.repository.IncidentRepository
 import com.javiermontillaarias.escapemanager.databinding.FragmentIncidentsBinding
 import com.javiermontillaarias.escapemanager.ui.adapters.IncidentsAdapter
 import com.javiermontillaarias.escapemanager.util.Resource
+import com.javiermontillaarias.escapemanager.data.model.Incident
+import com.javiermontillaarias.escapemanager.util.appSessionManager
 import com.google.android.material.snackbar.Snackbar
 
 class IncidentsFragment : Fragment() {
@@ -25,7 +26,7 @@ class IncidentsFragment : Fragment() {
     private val viewModel: IncidentsViewModel by viewModels {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                val api = RetrofitClient.getApiService(SessionManager(requireContext()))
+                val api = RetrofitClient.getApiService(appSessionManager)
                 @Suppress("UNCHECKED_CAST")
                 return IncidentsViewModel(IncidentRepository(api)) as T
             }
@@ -33,6 +34,7 @@ class IncidentsFragment : Fragment() {
     }
 
     private lateinit var adapter: IncidentsAdapter
+    private var showOnlyPending = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -44,11 +46,21 @@ class IncidentsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // BUG-05: restaurar el estado del filtro antes de configurar el listener,
+        // evita que el chip visualmente activo tras rotación muestre todos los registros.
+        showOnlyPending = savedInstanceState?.getBoolean("showOnlyPending") ?: false
+        binding.chipPendientes.isChecked = showOnlyPending
+
         adapter = IncidentsAdapter { incident ->
             viewModel.resolve(incident.id)
         }
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        binding.chipPendientes.setOnCheckedChangeListener { _, isChecked ->
+            showOnlyPending = isChecked
+            applyFilter((viewModel.incidents.value as? Resource.Success)?.data)
+        }
 
         viewModel.incidents.observe(viewLifecycleOwner) { state ->
             binding.swipeRefresh.isRefreshing = false
@@ -58,7 +70,7 @@ class IncidentsFragment : Fragment() {
                 is Resource.Success -> {
                     binding.progressBar.visibility = View.GONE
                     binding.tvError.visibility = View.GONE
-                    adapter.submitList(state.data)
+                    applyFilter(state.data)
                 }
                 is Resource.Error -> {
                     binding.progressBar.visibility = View.GONE
@@ -79,6 +91,16 @@ class IncidentsFragment : Fragment() {
         }
 
         binding.swipeRefresh.setOnRefreshListener { viewModel.loadIncidents() }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean("showOnlyPending", showOnlyPending)
+    }
+
+    private fun applyFilter(data: List<Incident>?) {
+        val list = if (showOnlyPending) data?.filter { !it.resuelta } else data
+        adapter.submitList(list ?: emptyList())
     }
 
     override fun onDestroyView() {

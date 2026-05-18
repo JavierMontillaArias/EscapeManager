@@ -14,9 +14,9 @@ class Game(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
     pistas_usadas: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
-    hora_inicio_real: Mapped[datetime] = mapped_column(DateTime, nullable=False)
+    hora_inicio_real: Mapped[datetime] = mapped_column(DateTime, nullable=False, index=True)
     # Nullable: la partida puede estar en curso sin hora de fin
-    hora_fin_real: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
+    hora_fin_real: Mapped[datetime | None] = mapped_column(DateTime, nullable=True, index=True)
     # Nullable: se desconoce hasta que la partida se cierra
     escaparon: Mapped[bool | None] = mapped_column(Boolean, nullable=True)
     observaciones: Mapped[str | None] = mapped_column(Text, nullable=True)

@@ -10,11 +10,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.javiermontillaarias.escapemanager.data.local.SessionManager
 import com.javiermontillaarias.escapemanager.data.network.RetrofitClient
 import com.javiermontillaarias.escapemanager.data.repository.GameRepository
 import com.javiermontillaarias.escapemanager.databinding.FragmentActiveGameBinding
 import com.javiermontillaarias.escapemanager.util.Resource
+import com.javiermontillaarias.escapemanager.util.appSessionManager
 import com.google.android.material.snackbar.Snackbar
 
 class ActiveGameFragment : Fragment() {
@@ -25,7 +25,7 @@ class ActiveGameFragment : Fragment() {
     private val viewModel: ActiveGameViewModel by viewModels {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                val api = RetrofitClient.getApiService(SessionManager(requireContext()))
+                val api = RetrofitClient.getApiService(appSessionManager)
                 @Suppress("UNCHECKED_CAST")
                 return ActiveGameViewModel(GameRepository(api)) as T
             }
@@ -45,22 +45,39 @@ class ActiveGameFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         gameId = arguments?.getInt("gameId", -1) ?: -1
+
+        if (gameId == -1) {
+            Snackbar.make(binding.root, "Error: partida no válida", Snackbar.LENGTH_LONG).show()
+            findNavController().popBackStack()
+            return
+        }
+
         val groupName = arguments?.getString("groupName") ?: "Grupo"
         val roomName = arguments?.getString("roomName") ?: ""
+        val startTime = arguments?.getString("startTime")
 
         binding.tvGroupName.text = groupName
         binding.tvRoomName.text = roomName
 
-        viewModel.startTimer()
+        // I-07: pasar la hora de inicio real para que el timer refleje tiempo transcurrido real
+        viewModel.startTimer(startTime)
 
         viewModel.elapsedSeconds.observe(viewLifecycleOwner) { seconds ->
             binding.tvTimer.text = formatTime(seconds)
         }
 
+        // BUG-01: deshabilitar btnAddHint durante Loading para evitar doble-tap
         viewModel.hintsResult.observe(viewLifecycleOwner) { state ->
             when (state) {
-                is Resource.Success -> binding.tvHints.text = state.data.hintsUsed.toString()
-                is Resource.Error -> Snackbar.make(binding.root, state.message, Snackbar.LENGTH_SHORT).show()
+                is Resource.Loading -> binding.btnAddHint.isEnabled = false
+                is Resource.Success -> {
+                    binding.btnAddHint.isEnabled = true
+                    binding.tvHints.text = state.data.hintsUsed.toString()
+                }
+                is Resource.Error -> {
+                    binding.btnAddHint.isEnabled = true
+                    Snackbar.make(binding.root, state.message, Snackbar.LENGTH_SHORT).show()
+                }
                 else -> {}
             }
         }
@@ -89,7 +106,7 @@ class ActiveGameFragment : Fragment() {
     }
 
     private fun confirmClose(escaped: Boolean) {
-        val obs = binding.etObservations.text.toString().trim()
+        val obs = binding.etObservations.text.toString().trim().ifEmpty { null }
         AlertDialog.Builder(requireContext())
             .setTitle(if (escaped) "¡Escaparon!" else "No escaparon")
             .setMessage("¿Confirmas el cierre de la partida?")

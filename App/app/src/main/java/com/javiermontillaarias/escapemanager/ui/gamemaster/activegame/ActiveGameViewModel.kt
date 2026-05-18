@@ -1,5 +1,6 @@
 package com.javiermontillaarias.escapemanager.ui.gamemaster.activegame
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,6 +13,8 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import java.time.Instant
+import java.util.concurrent.atomic.AtomicBoolean
 
 class ActiveGameViewModel(private val repository: GameRepository) : ViewModel() {
 
@@ -25,29 +28,38 @@ class ActiveGameViewModel(private val repository: GameRepository) : ViewModel() 
     val elapsedSeconds: LiveData<Long> = _elapsedSeconds
 
     private var timerJob: Job? = null
-    private var hintsUsed = 0
 
-    fun startTimer() {
+    // I-07: offset calculado desde la hora de inicio real del QR para que el timer
+    // refleje el tiempo transcurrido real incluso si el Fragment se recrea.
+    fun startTimer(startTimeIso: String? = null) {
+        val offsetSeconds = parseElapsedSeconds(startTimeIso)
         timerJob?.cancel()
         timerJob = viewModelScope.launch {
+            var seconds = offsetSeconds
             while (isActive) {
+                _elapsedSeconds.value = seconds
                 delay(1000)
-                _elapsedSeconds.value = (_elapsedSeconds.value ?: 0L) + 1L
+                seconds++
             }
         }
     }
 
     fun stopTimer() = timerJob?.cancel()
 
+    // BUG-01: AtomicBoolean evita doble-tap rápido igual que en QrScannerViewModel
+    private val isAddingHint = AtomicBoolean(false)
+
     fun addHint(gameId: Int) {
+        if (!isAddingHint.compareAndSet(false, true)) return
         viewModelScope.launch {
-            val result = repository.addHint(gameId)
-            _hintsResult.value = result
-            if (result is Resource.Success) hintsUsed = result.data.hintsUsed
+            _hintsResult.value = Resource.Loading
+            // B-09: hintsUsed eliminado; la fuente de verdad es el servidor
+            _hintsResult.value = repository.addHint(gameId)
+            isAddingHint.set(false)
         }
     }
 
-    fun closeGame(gameId: Int, escaped: Boolean, observations: String) {
+    fun closeGame(gameId: Int, escaped: Boolean, observations: String?) {
         stopTimer()
         viewModelScope.launch {
             _closeResult.value = Resource.Loading
@@ -58,5 +70,22 @@ class ActiveGameViewModel(private val repository: GameRepository) : ViewModel() 
     override fun onCleared() {
         super.onCleared()
         timerJob?.cancel()
+    }
+
+    // BUG-01: parsing robusto que maneja datetime con o sin microsegundos y con o sin offset.
+    private fun parseElapsedSeconds(startTimeIso: String?): Long {
+        if (startTimeIso.isNullOrBlank()) return 0L
+        return try {
+            // Normalizar: eliminar fracción de segundos y añadir Z si no tiene offset de zona.
+            val cleanIso = startTimeIso.substringBefore('.').let {
+                if (!it.endsWith("Z") && !it.contains("+")) "${it}Z" else it
+            }
+            val startInstant = Instant.parse(cleanIso)
+            val elapsed = Instant.now().epochSecond - startInstant.epochSecond
+            if (elapsed > 0) elapsed else 0L
+        } catch (e: Exception) {
+            Log.e("ActiveGame", "parseElapsedSeconds falló con: $startTimeIso", e)
+            0L
+        }
     }
 }

@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId = "com.javiermontillaarias.escapemanager"
-        minSdk = 26
+        minSdk = 28
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
@@ -18,6 +18,24 @@ android {
 
     buildFeatures {
         viewBinding = true
+        buildConfig = true
+    }
+
+    buildTypes {
+        debug {
+            buildConfigField("String", "BASE_URL", "\"http://10.0.2.2:8000/\"")
+        }
+        release {
+            isMinifyEnabled = true
+            isShrinkResources = true
+            // C6: Reemplaza con la URL real del servidor de producción antes de distribuir
+            // Ejemplo Railway: "https://escapemanager-production.up.railway.app/"
+            buildConfigField("String", "BASE_URL", "\"https://api.tudominio.com/\"")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
     }
 
     compileOptions {
@@ -28,6 +46,23 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
+}
+
+// PR-01: Falla el build de release si la URL de producción es todavía un placeholder.
+tasks.register("checkProductionConfig") {
+    doLast {
+        val releaseUrl = android.buildTypes.getByName("release")
+            .buildConfigFields["BASE_URL"]?.value ?: ""
+        if (releaseUrl.contains("tudominio")) {
+            throw GradleException(
+                "BASE_URL de producción contiene 'tudominio'. " +
+                "Actualiza buildConfigField en build.gradle.kts antes de publicar."
+            )
+        }
+    }
+}
+tasks.whenTaskAdded {
+    if (name == "assembleRelease") dependsOn("checkProductionConfig")
 }
 
 dependencies {
@@ -51,6 +86,8 @@ dependencies {
     implementation(libs.camera.view)
     implementation(libs.mpandroidchart)
     implementation(libs.swiperefresh)
+    implementation("androidx.security:security-crypto:1.1.0-alpha06")
+    testImplementation("io.mockk:mockk:1.13.10")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

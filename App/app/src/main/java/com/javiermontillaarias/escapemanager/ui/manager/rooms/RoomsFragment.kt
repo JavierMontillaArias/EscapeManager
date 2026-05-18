@@ -6,19 +6,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.javiermontillaarias.escapemanager.R
-import com.javiermontillaarias.escapemanager.data.local.SessionManager
 import com.javiermontillaarias.escapemanager.data.model.Room
 import com.javiermontillaarias.escapemanager.data.network.RetrofitClient
 import com.javiermontillaarias.escapemanager.data.repository.RoomRepository
 import com.javiermontillaarias.escapemanager.databinding.FragmentRoomsBinding
 import com.javiermontillaarias.escapemanager.ui.adapters.RoomsAdapter
 import com.javiermontillaarias.escapemanager.util.Resource
+import com.javiermontillaarias.escapemanager.util.appSessionManager
 import com.google.android.material.snackbar.Snackbar
 
 class RoomsFragment : Fragment() {
@@ -29,7 +30,7 @@ class RoomsFragment : Fragment() {
     private val viewModel: RoomsViewModel by viewModels {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                val api = RetrofitClient.getApiService(SessionManager(requireContext()))
+                val api = RetrofitClient.getApiService(appSessionManager)
                 @Suppress("UNCHECKED_CAST")
                 return RoomsViewModel(RoomRepository(api)) as T
             }
@@ -50,14 +51,18 @@ class RoomsFragment : Fragment() {
         setupRecyclerView()
         observeViewModel()
         setupListeners()
+
+        setFragmentResultListener("room_saved") { _, bundle ->
+            val msg = bundle.getString("message", "Sala guardada")
+            Snackbar.make(binding.root, msg, Snackbar.LENGTH_SHORT).show()
+            viewModel.loadRooms()
+        }
     }
 
     private fun setupRecyclerView() {
         adapter = RoomsAdapter(
             onEdit = { room ->
-                // Navegar al fragment de edición pasando el ID de la sala
-                val bundle = Bundle().apply { putInt("roomId", room.id) }
-                // Guardamos la sala seleccionada para usarla en el fragment
+                // INC-06: incluir campo activa en el bundle para pre-rellenar el switch
                 requireActivity().supportFragmentManager.setFragmentResult(
                     "selected_room", Bundle().apply {
                         putInt("id", room.id)
@@ -65,8 +70,10 @@ class RoomsFragment : Fragment() {
                         putString("theme", room.theme)
                         putInt("capacity", room.capacity)
                         putString("difficulty", room.dificultad)
+                        putBoolean("activa", room.activa)
                     }
                 )
+                val bundle = Bundle().apply { putInt("roomId", room.id) }
                 findNavController().navigate(R.id.createEditRoomFragment, bundle)
             },
             onDelete = { room -> showDeleteDialog(room) }
@@ -97,7 +104,7 @@ class RoomsFragment : Fragment() {
         viewModel.operationResult.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is Resource.Success ->
-                    Snackbar.make(binding.root, "Operación realizada", Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(binding.root, state.data, Snackbar.LENGTH_SHORT).show()
                 is Resource.Error ->
                     Snackbar.make(binding.root, state.message, Snackbar.LENGTH_LONG).show()
                 else -> {}

@@ -1,3 +1,5 @@
+import html
+import ssl
 import smtplib
 import logging
 from email.mime.multipart import MIMEMultipart
@@ -11,7 +13,19 @@ from app.config import settings
 logger = logging.getLogger(__name__)
 
 
-def _build_html_body(nombre_grupo: str,sala: str,fecha: str,hora_inicio: str,hora_fin: str,) -> str:
+def _mask_email(email: str) -> str:
+    parts = email.split("@")
+    return f"{parts[0][:2]}***@{parts[1]}" if len(parts) == 2 else "***"
+
+
+def _build_html_body(nombre_grupo: str, sala: str, fecha: str, hora_inicio: str, hora_fin: str) -> str:
+    # S-2: html.escape() en todos los campos interpolados para prevenir inyección HTML en clientes de correo
+    nombre_grupo_safe = html.escape(nombre_grupo)
+    sala_safe = html.escape(sala)
+    fecha_safe = html.escape(fecha)
+    hora_inicio_safe = html.escape(hora_inicio)
+    hora_fin_safe = html.escape(hora_fin)
+
     return f"""
     <!DOCTYPE html>
     <html>
@@ -37,12 +51,12 @@ def _build_html_body(nombre_grupo: str,sala: str,fecha: str,hora_inicio: str,hor
                 <p>Confirmación de Reserva</p>
             </div>
             <div class="content">
-                <p>¡Hola, <strong>{nombre_grupo}</strong>!</p>
+                <p>¡Hola, <strong>{nombre_grupo_safe}</strong>!</p>
                 <p>Tu reserva ha sido confirmada:</p>
                 <div class="info-box">
-                    <p><strong>Sala:</strong> {sala}</p>
-                    <p><strong>Fecha:</strong> {fecha}</p>
-                    <p><strong>Horario:</strong> {hora_inicio} – {hora_fin}</p>
+                    <p><strong>Sala:</strong> {sala_safe}</p>
+                    <p><strong>Fecha:</strong> {fecha_safe}</p>
+                    <p><strong>Horario:</strong> {hora_inicio_safe} – {hora_fin_safe}</p>
                 </div>
                 <div class="qr-section">
                     <p><strong>Tu código QR de acceso:</strong></p>
@@ -62,7 +76,15 @@ def _build_html_body(nombre_grupo: str,sala: str,fecha: str,hora_inicio: str,hor
     """
 
 
-def send_booking_confirmation(email: str,nombre_grupo: str,fecha: str,hora_inicio: str,hora_fin: str,sala: str,qr_bytes: bytes,) -> bool:
+def send_booking_confirmation(
+    email: str,
+    nombre_grupo: str,
+    fecha: str,
+    hora_inicio: str,
+    hora_fin: str,
+    sala: str,
+    qr_bytes: bytes,
+) -> bool:
     """
     Envía el email de confirmación con el QR adjunto e inline.
 
@@ -72,7 +94,7 @@ def send_booking_confirmation(email: str,nombre_grupo: str,fecha: str,hora_inici
         la creación de la reserva.
     """
     if not settings.SMTP_USER or not settings.SMTP_PASSWORD:
-        logger.warning("SMTP no configurado. Email no enviado para %s", email)
+        logger.warning("SMTP no configurado. Email no enviado para %s", _mask_email(email))
         return False
 
     try:
@@ -112,9 +134,11 @@ def send_booking_confirmation(email: str,nombre_grupo: str,fecha: str,hora_inici
         qr_attachment.add_header("Content-Disposition", "attachment", filename="qr_acceso.png")
         msg.attach(qr_attachment)
 
+        # S-04: ssl.create_default_context() verifica el certificado del servidor SMTP.
+        tls_context = ssl.create_default_context()
         with smtplib.SMTP(settings.SMTP_HOST, settings.SMTP_PORT) as server:
             server.ehlo()
-            server.starttls()
+            server.starttls(context=tls_context)
             server.login(settings.SMTP_USER, settings.SMTP_PASSWORD)
             server.sendmail(
                 from_addr=settings.SMTP_FROM or settings.SMTP_USER,
@@ -122,7 +146,7 @@ def send_booking_confirmation(email: str,nombre_grupo: str,fecha: str,hora_inici
                 msg=msg.as_string(),
             )
 
-        logger.info("Email enviado a %s", email)
+        logger.info("Email enviado a %s", _mask_email(email))
         return True
 
     except smtplib.SMTPAuthenticationError:

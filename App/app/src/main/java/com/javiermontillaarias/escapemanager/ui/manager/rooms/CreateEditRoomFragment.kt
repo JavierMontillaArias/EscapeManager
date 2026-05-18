@@ -6,15 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
+import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.javiermontillaarias.escapemanager.data.local.SessionManager
 import com.javiermontillaarias.escapemanager.data.network.RetrofitClient
 import com.javiermontillaarias.escapemanager.data.repository.RoomRepository
 import com.javiermontillaarias.escapemanager.databinding.FragmentCreateEditRoomBinding
 import com.javiermontillaarias.escapemanager.util.Resource
+import com.javiermontillaarias.escapemanager.util.appSessionManager
 import com.google.android.material.snackbar.Snackbar
 
 class CreateEditRoomFragment : Fragment() {
@@ -25,7 +27,7 @@ class CreateEditRoomFragment : Fragment() {
     private val viewModel: RoomsViewModel by viewModels {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                val api = RetrofitClient.getApiService(SessionManager(requireContext()))
+                val api = RetrofitClient.getApiService(appSessionManager)
                 @Suppress("UNCHECKED_CAST")
                 return RoomsViewModel(RoomRepository(api)) as T
             }
@@ -62,14 +64,20 @@ class CreateEditRoomFragment : Fragment() {
             binding.etCapacity.setText(bundle.getInt("capacity").toString())
             val diffIndex = difficulties.indexOf(bundle.getString("difficulty"))
             if (diffIndex >= 0) binding.spinnerDifficulty.setSelection(diffIndex)
+            // INC-06: mostrar el switch sólo en modo edición con valor actual
+            binding.switchActiva.visibility = View.VISIBLE
+            binding.switchActiva.isChecked = bundle.getBoolean("activa", true)
         }
 
         binding.btnSave.setOnClickListener { saveRoom() }
 
         viewModel.operationResult.observe(viewLifecycleOwner) { state ->
+            // BUG-05: deshabilitar el botón mientras la operación está en curso
+            // para evitar peticiones duplicadas por pulsaciones múltiples
+            binding.btnSave.isEnabled = state !is Resource.Loading
             when (state) {
                 is Resource.Success -> {
-                    Snackbar.make(binding.root, "Sala guardada", Snackbar.LENGTH_SHORT).show()
+                    setFragmentResult("room_saved", bundleOf("message" to "Sala guardada correctamente"))
                     findNavController().popBackStack()
                 }
                 is Resource.Error -> {
@@ -104,7 +112,9 @@ class CreateEditRoomFragment : Fragment() {
         }
 
         if (editingRoomId != -1) {
-            viewModel.updateRoom(editingRoomId, name, theme, capacity, difficulty)
+            // INC-06: pasar el estado del switch al actualizar
+            val activa = if (binding.switchActiva.visibility == View.VISIBLE) binding.switchActiva.isChecked else null
+            viewModel.updateRoom(editingRoomId, name, theme, capacity, difficulty, activa)
         } else {
             viewModel.createRoom(name, theme, capacity, difficulty)
         }

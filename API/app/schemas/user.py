@@ -9,7 +9,10 @@ class UserCreate(UserBase):
     password: str = Field(min_length = 8)
     rol_id: int = Field(ge = 1)
 
-class UserUpdate(UserBase):
+# INC-03: hereda de BaseModel directamente para que todos los campos sean opcionales
+# sin ambigüedad. Si UserBase añadiera campos obligatorios en el futuro, UserUpdate
+# no los heredaría accidentalmente.
+class UserUpdate(BaseModel):
     nombre: str | None = Field(default=None, min_length = 2, max_length = 100)
     email: EmailStr | None = None
     activo: bool | None = None

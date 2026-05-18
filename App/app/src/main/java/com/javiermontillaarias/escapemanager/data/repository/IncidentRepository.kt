@@ -2,26 +2,19 @@ package com.javiermontillaarias.escapemanager.data.repository
 
 import com.javiermontillaarias.escapemanager.data.model.Incident
 import com.javiermontillaarias.escapemanager.data.model.IncidentRequest
+import com.javiermontillaarias.escapemanager.data.model.IncidentResolveResponse
 import com.javiermontillaarias.escapemanager.data.network.ApiService
 import com.javiermontillaarias.escapemanager.util.Resource
+import com.javiermontillaarias.escapemanager.util.safeApiCall
 
 class IncidentRepository(private val api: ApiService) {
 
-    suspend fun getIncidents(): Resource<List<Incident>> = safeCall { api.getIncidents() }
+    suspend fun getIncidents(): Resource<List<Incident>> = safeApiCall { api.getIncidents() }
 
     suspend fun createIncident(request: IncidentRequest): Resource<Incident> =
-        safeCall { api.createIncident(request) }
+        safeApiCall { api.createIncident(request) }
 
-    suspend fun resolveIncident(id: Int): Resource<Incident> =
-        safeCall { api.resolveIncident(id) }
-
-    private suspend fun <T> safeCall(call: suspend () -> retrofit2.Response<T>): Resource<T> {
-        return try {
-            val response = call()
-            if (response.isSuccessful) Resource.Success(response.body()!!)
-            else Resource.Error("Error ${response.code()}: ${response.message()}")
-        } catch (e: Exception) {
-            Resource.Error("Error de conexión: ${e.message}")
-        }
-    }
+    // A2: devuelve IncidentResolveResponse (refleja exactamente lo que devuelve la API)
+    suspend fun resolveIncident(id: Int): Resource<IncidentResolveResponse> =
+        safeApiCall { api.resolveIncident(id) }
 }

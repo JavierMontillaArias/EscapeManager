@@ -7,22 +7,22 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.javiermontillaarias.escapemanager.EscapeManagerApp
 import com.javiermontillaarias.escapemanager.R
-import com.javiermontillaarias.escapemanager.data.local.SessionManager
 import com.javiermontillaarias.escapemanager.data.network.RetrofitClient
 import com.javiermontillaarias.escapemanager.data.repository.AuthRepository
 import com.javiermontillaarias.escapemanager.databinding.FragmentLoginBinding
 import com.javiermontillaarias.escapemanager.util.Resource
+import com.javiermontillaarias.escapemanager.util.appSessionManager
 
 class LoginFragment : Fragment() {
 
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
 
-    private val sessionManager by lazy { SessionManager(requireContext()) }
     private val viewModel: LoginViewModel by viewModels {
-        val api = RetrofitClient.getApiService(sessionManager)
-        LoginViewModelFactory(AuthRepository(api, sessionManager))
+        val sm = appSessionManager
+        LoginViewModelFactory(AuthRepository(RetrofitClient.getApiService(sm), sm))
     }
 
     override fun onCreateView(
@@ -35,12 +35,11 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Si ya está logueado, navega directamente
-        if (sessionManager.isLoggedIn) navigateAfterLogin()
+        if (appSessionManager.isLoggedIn) navigateAfterLogin()
 
         binding.btnLogin.setOnClickListener {
             val email = binding.etEmail.text.toString().trim()
-            val password = binding.etPassword.text.toString().trim()
+            val password = binding.etPassword.text.toString()
             viewModel.login(email, password)
         }
 
@@ -72,7 +71,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun navigateAfterLogin() {
-        val destination = if (sessionManager.isManager) {
+        val destination = if (appSessionManager.isManager) {
             R.id.managerMainFragment
         } else {
             R.id.gmMainFragment

@@ -1,5 +1,6 @@
 package com.javiermontillaarias.escapemanager.data.network
 
+import com.javiermontillaarias.escapemanager.BuildConfig
 import com.javiermontillaarias.escapemanager.data.local.SessionManager
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -9,21 +10,30 @@ import java.util.concurrent.TimeUnit
 
 object RetrofitClient {
 
-    // Para emulador usa 10.0.2.2; para dispositivo real usa la IP de tu máquina
-    private const val BASE_URL = "http://10.0.2.2:8000/"
+    private val BASE_URL get() = BuildConfig.BASE_URL
 
     private var retrofit: Retrofit? = null
+    // Q-01: cachear ApiService para evitar crear instancias en cada llamada
+    private var apiService: ApiService? = null
 
+    @Synchronized
     fun getInstance(sessionManager: SessionManager): Retrofit {
         if (retrofit == null) {
             val logging = HttpLoggingInterceptor().apply {
-                level = HttpLoggingInterceptor.Level.BODY
+                level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.HEADERS
+                        else HttpLoggingInterceptor.Level.NONE
+                if (BuildConfig.DEBUG) redactHeader("Authorization")
             }
 
-            // API sin auth para el refresh token
             val noAuthRetrofit = Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .client(OkHttpClient.Builder().addInterceptor(logging).build())
+                .client(
+                    OkHttpClient.Builder()
+                        .addInterceptor(logging)
+                        .connectTimeout(30, TimeUnit.SECONDS)
+                        .readTimeout(30, TimeUnit.SECONDS)
+                        .build()
+                )
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
             val noAuthApi = noAuthRetrofit.create(ApiService::class.java)
@@ -45,6 +55,10 @@ object RetrofitClient {
         return retrofit!!
     }
 
-    fun getApiService(sessionManager: SessionManager): ApiService =
-        getInstance(sessionManager).create(ApiService::class.java)
+    @Synchronized
+    fun getApiService(sessionManager: SessionManager): ApiService {
+        return apiService ?: getInstance(sessionManager)
+            .create(ApiService::class.java)
+            .also { apiService = it }
+    }
 }

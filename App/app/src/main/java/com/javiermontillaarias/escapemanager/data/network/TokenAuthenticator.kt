@@ -2,6 +2,7 @@ package com.javiermontillaarias.escapemanager.data.network
 
 import com.javiermontillaarias.escapemanager.data.local.SessionManager
 import com.javiermontillaarias.escapemanager.data.model.RefreshRequest
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import okhttp3.Authenticator
 import okhttp3.Request
@@ -13,29 +14,47 @@ class TokenAuthenticator(
     private val api: ApiService
 ) : Authenticator {
 
-    override fun authenticate(route: Route?, response: Response): Request? {
-        // Evitar bucle infinito
-        if (response.request.header("Authorization") == null) return null
+    // Variables de instancia en lugar de companion object para evitar estado global
+    // compartido entre instancias en tests o escenarios de múltiples usuarios (BUG-04)
+    private var lastRefreshTime = 0L
+    private val refreshLock = Any()
 
-        val newToken = runBlocking {
-            try {
-                val refreshToken = sessionManager.refreshToken ?: return@runBlocking null
-                val res = api.refreshToken(RefreshRequest(refreshToken))
-                if (res.isSuccessful) {
-                    val body = res.body()!!
-                    sessionManager.accessToken = body.accessToken
-                    body.accessToken
-                } else {
-                    sessionManager.clearSession()
+    override fun authenticate(route: Route?, response: Response): Request? {
+        if (response.priorResponse != null) return null
+
+        synchronized(refreshLock) {
+            val now = System.currentTimeMillis()
+            if (now - lastRefreshTime < 5_000L) {
+                val currentToken = sessionManager.accessToken ?: return null
+                return response.request.newBuilder()
+                    .header("Authorization", "Bearer $currentToken")
+                    .build()
+            }
+
+            val newToken = runBlocking(Dispatchers.IO) {
+                try {
+                    val refreshToken = sessionManager.refreshToken ?: return@runBlocking null
+                    val res = api.refreshToken(RefreshRequest(refreshToken))
+                    if (res.isSuccessful) {
+                        val body = res.body() ?: return@runBlocking null
+                        // CAL-02: escritura atómica — evita tokens inconsistentes si el proceso
+                        // se interrumpe entre las dos escrituras individuales anteriores
+                        sessionManager.updateTokens(body.accessToken, body.refreshToken)
+                        body.accessToken
+                    } else {
+                        sessionManager.clearSession()
+                        null
+                    }
+                } catch (e: Exception) {
                     null
                 }
-            } catch (e: Exception) {
-                null
             }
-        } ?: return null
 
-        return response.request.newBuilder()
-            .header("Authorization", "Bearer $newToken")
-            .build()
+            lastRefreshTime = System.currentTimeMillis()
+            if (newToken == null) return null
+            return response.request.newBuilder()
+                .header("Authorization", "Bearer $newToken")
+                .build()
+        }
     }
 }
