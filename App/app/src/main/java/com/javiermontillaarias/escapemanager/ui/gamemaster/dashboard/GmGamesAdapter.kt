@@ -10,8 +10,9 @@ import com.javiermontillaarias.escapemanager.R
 import com.javiermontillaarias.escapemanager.data.model.Game
 import com.javiermontillaarias.escapemanager.databinding.ItemGameBinding
 
-// B-07: usa ItemGameBinding (layout dedicado) en lugar de reutilizar ItemBookingBinding
-class GmGamesAdapter : ListAdapter<Game, GmGamesAdapter.ViewHolder>(GameDiffCallback()) {
+class GmGamesAdapter(
+    private val onGameClick: (Game) -> Unit
+) : ListAdapter<Game, GmGamesAdapter.ViewHolder>(GameDiffCallback()) {
 
     class GameDiffCallback : DiffUtil.ItemCallback<Game>() {
         override fun areItemsTheSame(oldItem: Game, newItem: Game) = oldItem.id == newItem.id
@@ -29,21 +30,29 @@ class GmGamesAdapter : ListAdapter<Game, GmGamesAdapter.ViewHolder>(GameDiffCall
             val statusText = when {
                 game.endTime != null && game.escaparon == true  -> "Escaparon"
                 game.endTime != null && game.escaparon == false -> "No escaparon"
-                game.endTime != null -> "Completada"
-                else -> "En curso"
+                game.endTime != null                            -> "Completada"
+                else                                            -> "En curso"
             }
             binding.tvStatus.text = statusText
 
-            // Q-06: colores desde recursos en lugar de literales hex
             val colorRes = when {
                 game.endTime != null && game.escaparon == true  -> R.color.status_active
                 game.endTime != null && game.escaparon == false -> R.color.status_cancelled
-                game.endTime != null -> R.color.status_completed
-                else -> R.color.status_confirmed
+                game.endTime != null                            -> R.color.status_completed
+                else                                            -> R.color.status_confirmed
             }
             binding.tvStatus.setBackgroundColor(
                 ContextCompat.getColor(binding.root.context, colorRes)
             )
+
+            // Solo partidas en curso son navegables
+            if (game.endTime == null) {
+                binding.root.setOnClickListener { onGameClick(game) }
+                binding.root.alpha = 1.0f
+            } else {
+                binding.root.setOnClickListener(null)
+                binding.root.alpha = 0.7f
+            }
         }
     }
 

@@ -18,13 +18,11 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // S-03: detectar URL de producción sin configurar
         if (BuildConfig.BASE_URL.contains("tudominio")) {
             if (BuildConfig.DEBUG) Log.w("Config", "BASE_URL es placeholder — configura la URL real para producción")
             else throw IllegalStateException("BASE_URL de producción no configurada. Actualiza buildConfigField en build.gradle.kts")
         }
 
-        // PR-07: observar expiración de sesión y reiniciar la App al login
         val sessionManager = (application as EscapeManagerApp).sessionManager
         lifecycleScope.launch {
             sessionManager.sessionExpiredFlow.collect {

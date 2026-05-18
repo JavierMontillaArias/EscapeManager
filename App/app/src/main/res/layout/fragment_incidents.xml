@@ -29,7 +29,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="4dp"
         android:text="Solo pendientes"
-        style="@style/Widget.Material3.Chip.Filter" />
+        style="@style/Widget.MaterialComponents.Chip.Filter" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefresh"

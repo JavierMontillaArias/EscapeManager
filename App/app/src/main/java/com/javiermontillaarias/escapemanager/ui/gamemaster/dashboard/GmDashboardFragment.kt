@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.javiermontillaarias.escapemanager.EscapeManagerApp
@@ -45,11 +46,19 @@ class GmDashboardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // B-03: reutilizar el singleton en lugar de crear una segunda instancia
         val sm = (requireActivity().application as EscapeManagerApp).sessionManager
         binding.tvWelcome.text = getString(R.string.welcome_gm, sm.userName ?: "Game Master")
 
-        gamesAdapter = GmGamesAdapter()
+        gamesAdapter = GmGamesAdapter { game ->
+            val bundle = Bundle().apply {
+                putInt("gameId", game.id)
+                putString("groupName", "Partida #${game.id}")
+                putString("roomName", "")
+                putString("startTime", game.startTime)
+            }
+            findNavController().navigate(R.id.activeGameFragment, bundle)
+        }
+
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = gamesAdapter
 
@@ -82,7 +91,6 @@ class GmDashboardFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        // BUG-02: stale check de 30s — evita petición innecesaria en cada reanudación
         viewModel.loadGamesIfStale()
     }
 

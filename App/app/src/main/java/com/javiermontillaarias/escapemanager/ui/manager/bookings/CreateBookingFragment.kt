@@ -127,12 +127,15 @@ class CreateBookingFragment : Fragment() {
 
     // PR-03: muestra un MaterialDatePicker restringido a fechas futuras
     private fun showDatePicker() {
+        val today = MaterialDatePicker.todayInUtcMilliseconds()
         val constraints = CalendarConstraints.Builder()
-            .setValidator(DateValidatorPointForward.now())
+            .setStart(today)
             .build()
         val picker = MaterialDatePicker.Builder.datePicker()
             .setTitleText("Selecciona la fecha")
+            .setSelection(today)
             .setCalendarConstraints(constraints)
+            .setTheme(R.style.CustomDatePickerTheme)
             .build()
         picker.addOnPositiveButtonClickListener { selection ->
             val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.US)

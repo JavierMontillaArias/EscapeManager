@@ -96,8 +96,7 @@ def create_booking(db: Session, data: BookingCreate) -> Booking:
     5. Genera imagen QR y envía email; actualiza qr_enviado si tiene éxito
     """
     # BUG-01: validar también que hora_inicio no haya pasado cuando la fecha es hoy
-    tz = ZoneInfo(settings.TIMEZONE)
-    now_local = datetime.now(tz)
+    now_local = datetime.now(timezone.utc)
     today = now_local.date()
     if data.fecha < today:
         raise ValueError("No se pueden crear reservas con fecha pasada")
@@ -199,9 +198,7 @@ def update_booking(db: Session, booking_id: int, data: BookingUpdate) -> Optiona
     )
 
     if horario_changed:
-        # BUG-01: validar también que hora_inicio no haya pasado cuando la fecha es hoy
-        tz = ZoneInfo(settings.TIMEZONE)
-        now_local = datetime.now(tz)
+        now_local = datetime.now(timezone.utc)
         today = now_local.date()
         if new_fecha < today:
             raise ValueError("No se puede mover una reserva a una fecha pasada")
