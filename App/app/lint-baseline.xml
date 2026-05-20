@@ -1,0 +1,2390 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues format="6" by="lint 8.13.2" type="baseline" client="gradle" dependencies="false" name="AGP (8.13.2)" variant="all" version="8.13.2">
+
+    <issue
+        id="ApplySharedPref"
+        message="Consider using `apply()` instead; `commit` writes its data to persistent storage immediately, whereas `apply` will handle it in the background"
+        errorLine1="            .commit()"
+        errorLine2="             ~~~~~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/data/local/SessionManager.kt"
+            line="67"
+            column="14"/>
+    </issue>
+
+    <issue
+        id="ApplySharedPref"
+        message="Consider using `apply()` instead; `commit` writes its data to persistent storage immediately, whereas `apply` will handle it in the background"
+        errorLine1="        prefs.edit().clear().commit()"
+        errorLine2="                             ~~~~~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/data/local/SessionManager.kt"
+            line="74"
+            column="30"/>
+    </issue>
+
+    <issue
+        id="DefaultLocale"
+        message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead"
+        errorLine1="            val formatted = String.format(&quot;%02d:%02d&quot;, picker.hour, picker.minute)"
+        errorLine2="                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/manager/bookings/CreateBookingFragment.kt"
+            line="155"
+            column="29"/>
+    </issue>
+
+    <issue
+        id="AndroidGradlePluginVersion"
+        message="A newer version of com.android.application than 8.13.2 is available: 9.2.1"
+        errorLine1="agp = &quot;8.13.2&quot;"
+        errorLine2="      ~~~~~~~~">
+        <location
+            file="$HOME/Desktop/TFG/App/App/gradle/libs.versions.toml"
+            line="2"
+            column="7"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.security:security-crypto than 1.1.0-alpha06 is available: 1.1.0"
+        errorLine1="    implementation(&quot;androidx.security:security-crypto:1.1.0-alpha06&quot;)"
+        errorLine2="                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="build.gradle.kts"
+            line="91"
+            column="20"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.core:core-ktx than 1.17.0 is available: 1.18.0"
+        errorLine1="coreKtx = &quot;1.17.0&quot;"
+        errorLine2="          ~~~~~~~~">
+        <location
+            file="$HOME/Desktop/TFG/App/App/gradle/libs.versions.toml"
+            line="4"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of com.google.android.material:material than 1.13.0 is available: 1.14.0"
+        errorLine1="material = &quot;1.13.0&quot;"
+        errorLine2="           ~~~~~~~~">
+        <location
+            file="$HOME/Desktop/TFG/App/App/gradle/libs.versions.toml"
+            line="9"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.activity:activity than 1.12.3 is available: 1.13.0"
+        errorLine1="activity = &quot;1.12.3&quot;"
+        errorLine2="           ~~~~~~~~">
+        <location
+            file="$HOME/Desktop/TFG/App/App/gradle/libs.versions.toml"
+            line="10"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.constraintlayout:constraintlayout than 2.1.4 is available: 2.2.1"
+        errorLine1="constraintlayout = &quot;2.1.4&quot;"
+        errorLine2="                   ~~~~~~~">
+        <location
+            file="$HOME/Desktop/TFG/App/App/gradle/libs.versions.toml"
+            line="11"
+            column="20"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.navigation.safeargs.kotlin than 2.7.7 is available: 2.9.8"
+        errorLine1="navVersion = &quot;2.7.7&quot;"
+        errorLine2="             ~~~~~~~">
+        <location
+            file="$HOME/Desktop/TFG/App/App/gradle/libs.versions.toml"
+            line="14"
+            column="14"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.navigation:navigation-fragment-ktx than 2.7.7 is available: 2.9.8"
+        errorLine1="navVersion = &quot;2.7.7&quot;"
+        errorLine2="             ~~~~~~~">
+        <location
+            file="$HOME/Desktop/TFG/App/App/gradle/libs.versions.toml"
+            line="14"
+            column="14"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.navigation:navigation-ui-ktx than 2.7.7 is available: 2.9.8"
+        errorLine1="navVersion = &quot;2.7.7&quot;"
+        errorLine2="             ~~~~~~~">
+        <location
+            file="$HOME/Desktop/TFG/App/App/gradle/libs.versions.toml"
+            line="14"
+            column="14"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.lifecycle:lifecycle-livedata-ktx than 2.7.0 is available: 2.10.0"
+        errorLine1="lifecycle = &quot;2.7.0&quot;"
+        errorLine2="            ~~~~~~~">
+        <location
+            file="$HOME/Desktop/TFG/App/App/gradle/libs.versions.toml"
+            line="15"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.lifecycle:lifecycle-runtime-ktx than 2.7.0 is available: 2.10.0"
+        errorLine1="lifecycle = &quot;2.7.0&quot;"
+        errorLine2="            ~~~~~~~">
+        <location
+            file="$HOME/Desktop/TFG/App/App/gradle/libs.versions.toml"
+            line="15"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.lifecycle:lifecycle-viewmodel-ktx than 2.7.0 is available: 2.10.0"
+        errorLine1="lifecycle = &quot;2.7.0&quot;"
+        errorLine2="            ~~~~~~~">
+        <location
+            file="$HOME/Desktop/TFG/App/App/gradle/libs.versions.toml"
+            line="15"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of com.google.mlkit:barcode-scanning than 17.2.0 is available: 17.3.0"
+        errorLine1="mlkit = &quot;17.2.0&quot;"
+        errorLine2="        ~~~~~~~~">
+        <location
+            file="$HOME/Desktop/TFG/App/App/gradle/libs.versions.toml"
+            line="17"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.camera:camera-camera2 than 1.3.2 is available: 1.6.1"
+        errorLine1="cameraX = &quot;1.3.2&quot;"
+        errorLine2="          ~~~~~~~">
+        <location
+            file="$HOME/Desktop/TFG/App/App/gradle/libs.versions.toml"
+            line="18"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.camera:camera-lifecycle than 1.3.2 is available: 1.6.1"
+        errorLine1="cameraX = &quot;1.3.2&quot;"
+        errorLine2="          ~~~~~~~">
+        <location
+            file="$HOME/Desktop/TFG/App/App/gradle/libs.versions.toml"
+            line="18"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.camera:camera-view than 1.3.2 is available: 1.6.1"
+        errorLine1="cameraX = &quot;1.3.2&quot;"
+        errorLine2="          ~~~~~~~">
+        <location
+            file="$HOME/Desktop/TFG/App/App/gradle/libs.versions.toml"
+            line="18"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.swiperefreshlayout:swiperefreshlayout than 1.1.0 is available: 1.2.0"
+        errorLine1="swiperefresh = &quot;1.1.0&quot;"
+        errorLine2="               ~~~~~~~">
+        <location
+            file="$HOME/Desktop/TFG/App/App/gradle/libs.versions.toml"
+            line="20"
+            column="16"/>
+    </issue>
+
+    <issue
+        id="NewerVersionAvailable"
+        message="A newer version of io.mockk:mockk than 1.13.10 is available: 1.14.9"
+        errorLine1="    testImplementation(&quot;io.mockk:mockk:1.13.10&quot;)"
+        errorLine2="                       ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="build.gradle.kts"
+            line="92"
+            column="24"/>
+    </issue>
+
+    <issue
+        id="NewerVersionAvailable"
+        message="A newer version of org.jetbrains.kotlin.android than 2.0.21 is available: 2.3.21"
+        errorLine1="kotlin = &quot;2.0.21&quot;"
+        errorLine2="         ~~~~~~~~">
+        <location
+            file="$HOME/Desktop/TFG/App/App/gradle/libs.versions.toml"
+            line="3"
+            column="10"/>
+    </issue>
+
+    <issue
+        id="NewerVersionAvailable"
+        message="A newer version of com.squareup.retrofit2:converter-gson than 2.9.0 is available: 3.0.0"
+        errorLine1="retrofit = &quot;2.9.0&quot;"
+        errorLine2="           ~~~~~~~">
+        <location
+            file="$HOME/Desktop/TFG/App/App/gradle/libs.versions.toml"
+            line="12"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="NewerVersionAvailable"
+        message="A newer version of com.squareup.retrofit2:retrofit than 2.9.0 is available: 3.0.0"
+        errorLine1="retrofit = &quot;2.9.0&quot;"
+        errorLine2="           ~~~~~~~">
+        <location
+            file="$HOME/Desktop/TFG/App/App/gradle/libs.versions.toml"
+            line="12"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="NewerVersionAvailable"
+        message="A newer version of com.squareup.okhttp3:logging-interceptor than 4.12.0 is available: 5.3.2"
+        errorLine1="okhttp = &quot;4.12.0&quot;"
+        errorLine2="         ~~~~~~~~">
+        <location
+            file="$HOME/Desktop/TFG/App/App/gradle/libs.versions.toml"
+            line="13"
+            column="10"/>
+    </issue>
+
+    <issue
+        id="NewerVersionAvailable"
+        message="A newer version of com.squareup.okhttp3:okhttp than 4.12.0 is available: 5.3.2"
+        errorLine1="okhttp = &quot;4.12.0&quot;"
+        errorLine2="         ~~~~~~~~">
+        <location
+            file="$HOME/Desktop/TFG/App/App/gradle/libs.versions.toml"
+            line="13"
+            column="10"/>
+    </issue>
+
+    <issue
+        id="NewerVersionAvailable"
+        message="A newer version of org.jetbrains.kotlinx:kotlinx-coroutines-android than 1.7.3 is available: 1.11.0"
+        errorLine1="coroutines = &quot;1.7.3&quot;"
+        errorLine2="             ~~~~~~~">
+        <location
+            file="$HOME/Desktop/TFG/App/App/gradle/libs.versions.toml"
+            line="16"
+            column="14"/>
+    </issue>
+
+    <issue
+        id="Aligned16KB"
+        message="The native library `arm64-v8a/libbarhopper_v3.so` (from `com.google.mlkit:barcode-scanning:17.2.0`) is not 16 KB aligned">
+        <location
+            file="$GRADLE_USER_HOME/caches/8.13/transforms/0f6a00c2072bcc6af661c280f9670e04/transformed/barcode-scanning-17.2.0/jni/arm64-v8a/libbarhopper_v3.so"/>
+    </issue>
+
+    <issue
+        id="Aligned16KB"
+        message="The native library `arm64-v8a/libbarhopper_v3.so` (from `com.google.mlkit:barcode-scanning:17.2.0`) is not 16 KB aligned">
+        <location
+            file="$GRADLE_USER_HOME/caches/8.13/transforms/0f6a00c2072bcc6af661c280f9670e04/transformed/barcode-scanning-17.2.0/jni/arm64-v8a/libbarhopper_v3.so"/>
+    </issue>
+
+    <issue
+        id="Aligned16KB"
+        message="The native library `arm64-v8a/libbarhopper_v3.so` (from `com.google.mlkit:barcode-scanning:17.2.0`) is not 16 KB aligned"
+        errorLine1="mlkit-barcode = { group = &quot;com.google.mlkit&quot;, name = &quot;barcode-scanning&quot;, version.ref = &quot;mlkit&quot; }"
+        errorLine2="                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="$HOME/Desktop/TFG/App/App/gradle/libs.versions.toml"
+            line="41"
+            column="18"/>
+    </issue>
+
+    <issue
+        id="DataExtractionRules"
+        message="The attribute `android:allowBackup` is deprecated from Android 12 and higher and may be removed in future versions. Consider adding the attribute `android:dataExtractionRules` specifying an `@xml` resource which configures cloud backups and device transfers on Android 12 and higher."
+        errorLine1="        android:allowBackup=&quot;false&quot;"
+        errorLine2="                             ~~~~~">
+        <location
+            file="src/main/AndroidManifest.xml"
+            line="10"
+            column="30"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="This folder configuration (`v26`) is unnecessary; `minSdkVersion` is 28. Merge all the resources in this folder into `mipmap-anydpi`.">
+        <location
+            file="src/main/res/mipmap-anydpi-v26"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        message="Possible overdraw: Root element paints background `@color/primary` with a theme that also paints a background (inferred theme is `@style/Theme.EscapeManager`)"
+        errorLine1="    android:background=&quot;@color/primary&quot;>"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_active_game.xml"
+            line="6"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        message="Possible overdraw: Root element paints background `@color/background` with a theme that also paints a background (inferred theme is `@style/Theme.EscapeManager`)"
+        errorLine1="    android:background=&quot;@color/background&quot;>"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_booking_detail.xml"
+            line="7"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        message="Possible overdraw: Root element paints background `@color/background` with a theme that also paints a background (inferred theme is `@style/Theme.EscapeManager`)"
+        errorLine1="    android:background=&quot;@color/background&quot;>"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_bookings.xml"
+            line="7"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        message="Possible overdraw: Root element paints background `@color/background` with a theme that also paints a background (inferred theme is `@style/Theme.EscapeManager`)"
+        errorLine1="    android:background=&quot;@color/background&quot;>"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_create_booking.xml"
+            line="7"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        message="Possible overdraw: Root element paints background `@color/background` with a theme that also paints a background (inferred theme is `@style/Theme.EscapeManager`)"
+        errorLine1="    android:background=&quot;@color/background&quot;>"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_create_edit_room.xml"
+            line="7"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        message="Possible overdraw: Root element paints background `@color/background` with a theme that also paints a background (inferred theme is `@style/Theme.EscapeManager`)"
+        errorLine1="    android:background=&quot;@color/background&quot;>"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_create_incident.xml"
+            line="6"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        message="Possible overdraw: Root element paints background `@color/background` with a theme that also paints a background (inferred theme is `@style/Theme.EscapeManager`)"
+        errorLine1="    android:background=&quot;@color/background&quot;>"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_gm_dashboard.xml"
+            line="7"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        message="Possible overdraw: Root element paints background `@color/background` with a theme that also paints a background (inferred theme is `@style/Theme.EscapeManager`)"
+        errorLine1="    android:background=&quot;@color/background&quot;>"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_gm_main.xml"
+            line="7"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        message="Possible overdraw: Root element paints background `@color/background` with a theme that also paints a background (inferred theme is `@style/Theme.EscapeManager`)"
+        errorLine1="    android:background=&quot;@color/background&quot;>"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_incidents.xml"
+            line="6"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        message="Possible overdraw: Root element paints background `@color/primary` with a theme that also paints a background (inferred theme is `@style/Theme.EscapeManager`)"
+        errorLine1="    android:background=&quot;@color/primary&quot;>"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_login.xml"
+            line="7"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        message="Possible overdraw: Root element paints background `@color/background` with a theme that also paints a background (inferred theme is `@style/Theme.EscapeManager`)"
+        errorLine1="    android:background=&quot;@color/background&quot;>"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_manager_dashboard.xml"
+            line="6"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        message="Possible overdraw: Root element paints background `@color/background` with a theme that also paints a background (inferred theme is `@style/Theme.EscapeManager`)"
+        errorLine1="    android:background=&quot;@color/background&quot;>"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_manager_main.xml"
+            line="7"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        message="Possible overdraw: Root element paints background `#000000` with a theme that also paints a background (inferred theme is `@style/Theme.EscapeManager`)"
+        errorLine1="    android:background=&quot;#000000&quot;>"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_qr_scanner.xml"
+            line="7"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        message="Possible overdraw: Root element paints background `@color/background` with a theme that also paints a background (inferred theme is `@style/Theme.EscapeManager`)"
+        errorLine1="    android:background=&quot;@color/background&quot;>"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_rooms.xml"
+            line="7"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.secondary_light` appears to be unused"
+        errorLine1="    &lt;color name=&quot;secondary_light&quot;>#4A90D9&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="6"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.dashboard` appears to be unused"
+        errorLine1="    &lt;string name=&quot;dashboard&quot;>Dashboard&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="7"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.rooms` appears to be unused"
+        errorLine1="    &lt;string name=&quot;rooms&quot;>Salas&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="8"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.bookings` appears to be unused"
+        errorLine1="    &lt;string name=&quot;bookings&quot;>Reservas&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="9"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.stats` appears to be unused"
+        errorLine1="    &lt;string name=&quot;stats&quot;>Estadísticas&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="10"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.incidents` appears to be unused"
+        errorLine1="    &lt;string name=&quot;incidents&quot;>Incidencias&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="11"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.scan_qr` appears to be unused"
+        errorLine1="    &lt;string name=&quot;scan_qr&quot;>Escanear QR&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="12"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.active_game` appears to be unused"
+        errorLine1="    &lt;string name=&quot;active_game&quot;>Partida Activa&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="13"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.loading` appears to be unused"
+        errorLine1="    &lt;string name=&quot;loading&quot;>Cargando...&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="14"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.error_network` appears to be unused"
+        errorLine1="    &lt;string name=&quot;error_network&quot;>Error de conexión. Verifica tu red.&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="15"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.error_credentials` appears to be unused"
+        errorLine1="    &lt;string name=&quot;error_credentials&quot;>Credenciales incorrectas&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="16"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.logout` appears to be unused"
+        errorLine1="    &lt;string name=&quot;logout&quot;>Cerrar sesión&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="17"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.cancel` appears to be unused"
+        errorLine1="    &lt;string name=&quot;cancel&quot;>Cancelar&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="19"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.delete` appears to be unused"
+        errorLine1="    &lt;string name=&quot;delete&quot;>Eliminar&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="20"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.confirm` appears to be unused"
+        errorLine1="    &lt;string name=&quot;confirm&quot;>Confirmar&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="21"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.create_booking` appears to be unused"
+        errorLine1="    &lt;string name=&quot;create_booking&quot;>Crear Reserva&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="22"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.create_room` appears to be unused"
+        errorLine1="    &lt;string name=&quot;create_room&quot;>Crear Sala&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="23"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.create_incident` appears to be unused"
+        errorLine1="    &lt;string name=&quot;create_incident&quot;>Crear Incidencia&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="24"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.hints_used` appears to be unused"
+        errorLine1="    &lt;string name=&quot;hints_used&quot;>Pistas usadas&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="25"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.close_game` appears to be unused"
+        errorLine1="    &lt;string name=&quot;close_game&quot;>Cerrar partida&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="26"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.escaped_yes` appears to be unused"
+        errorLine1="    &lt;string name=&quot;escaped_yes&quot;>¡Escaparon!&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="27"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.escaped_no` appears to be unused"
+        errorLine1="    &lt;string name=&quot;escaped_no&quot;>No escaparon&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="28"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.game_time` appears to be unused"
+        errorLine1="    &lt;string name=&quot;game_time&quot;>Tiempo de partida&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="29"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.resolve` appears to be unused"
+        errorLine1="    &lt;string name=&quot;resolve&quot;>Resolver&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="30"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.welcome_manager` appears to be unused"
+        errorLine1="    &lt;string name=&quot;welcome_manager&quot;>Bienvenido, %s&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="31"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.edit_room` appears to be unused"
+        errorLine1="    &lt;string name=&quot;edit_room&quot;>Editar Sala&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="33"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.stats_escape_rate` appears to be unused"
+        errorLine1="    &lt;string name=&quot;stats_escape_rate&quot;>Tasa de escape (%%)&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="35"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.stats_hints_avg` appears to be unused"
+        errorLine1="    &lt;string name=&quot;stats_hints_avg&quot;>Promedio de pistas&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="36"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.style.Base_Theme_EscapeManager` appears to be unused"
+        errorLine1="    &lt;style name=&quot;Base.Theme.EscapeManager&quot; parent=&quot;Theme.Material3.DayNight.NoActionBar&quot;>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values-night/themes.xml"
+            line="3"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.style.Widget_EscapeManager_CardView` appears to be unused"
+        errorLine1="    &lt;style name=&quot;Widget.EscapeManager.CardView&quot; parent=&quot;Widget.MaterialComponents.CardView&quot;>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/themes.xml"
+            line="28"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="TypographyEllipsis"
+        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?"
+        errorLine1="    &lt;string name=&quot;loading&quot;>Cargando...&lt;/string>"
+        errorLine2="                           ~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="14"
+            column="28"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension property `View.isVisible` instead?"
+        errorLine1="            val activa = if (binding.switchActiva.visibility == View.VISIBLE) binding.switchActiva.isChecked else null"
+        errorLine2="                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/manager/rooms/CreateEditRoomFragment.kt"
+            line="116"
+            column="30"/>
+    </issue>
+
+    <issue
+        id="UseTomlInstead"
+        message="Use version catalog instead"
+        errorLine1="    implementation(&quot;androidx.security:security-crypto:1.1.0-alpha06&quot;)"
+        errorLine2="                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="build.gradle.kts"
+            line="91"
+            column="20"/>
+    </issue>
+
+    <issue
+        id="UseTomlInstead"
+        message="Use version catalog instead"
+        errorLine1="    testImplementation(&quot;io.mockk:mockk:1.13.10&quot;)"
+        errorLine2="                       ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="build.gradle.kts"
+            line="92"
+            column="24"/>
+    </issue>
+
+    <issue
+        id="ContentDescription"
+        message="Missing `contentDescription` attribute on image"
+        errorLine1="            &lt;ImageButton"
+        errorLine2="             ~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/item_room.xml"
+            line="82"
+            column="14"/>
+    </issue>
+
+    <issue
+        id="ContentDescription"
+        message="Missing `contentDescription` attribute on image"
+        errorLine1="            &lt;ImageButton"
+        errorLine2="             ~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/item_room.xml"
+            line="90"
+            column="14"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="String literal in `setText` can not be translated. Use Android resources instead."
+        errorLine1="                    binding.tvGroupName.text = &quot;Cargando...&quot;"
+        errorLine2="                                                ~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/manager/bookings/BookingDetailFragment.kt"
+            line="68"
+            column="49"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="Do not concatenate text displayed with `setText`. Use resource string with placeholders."
+        errorLine1="                    binding.tvBookingId.text = &quot;Reserva #${b.id}&quot;"
+        errorLine2="                                               ~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/manager/bookings/BookingDetailFragment.kt"
+            line="72"
+            column="48"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="String literal in `setText` can not be translated. Use Android resources instead."
+        errorLine1="                    binding.tvBookingId.text = &quot;Reserva #${b.id}&quot;"
+        errorLine2="                                                ~~~~~~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/manager/bookings/BookingDetailFragment.kt"
+            line="72"
+            column="49"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="Do not concatenate text displayed with `setText`. Use resource string with placeholders."
+        errorLine1="                        &quot;${b.sala?.name ?: &quot;Sala #${b.roomId}&quot;}\n&quot; +"
+        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/manager/bookings/BookingDetailFragment.kt"
+            line="75"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="Do not concatenate text displayed with `setText`. Use resource string with placeholders."
+        errorLine1="                        &quot;${b.sala?.name ?: &quot;Sala #${b.roomId}&quot;}\n&quot; +"
+        errorLine2="                        ^">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/manager/bookings/BookingDetailFragment.kt"
+            line="75"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="Do not concatenate text displayed with `setText`. Use resource string with placeholders."
+        errorLine1="                        &quot;${b.sala?.name ?: &quot;Sala #${b.roomId}&quot;}\n&quot; +"
+        errorLine2="                        ^">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/manager/bookings/BookingDetailFragment.kt"
+            line="75"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="Do not concatenate text displayed with `setText`. Use resource string with placeholders."
+        errorLine1="                        &quot;${b.sala?.name ?: &quot;Sala #${b.roomId}&quot;}\n&quot; +"
+        errorLine2="                        ^">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/manager/bookings/BookingDetailFragment.kt"
+            line="75"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="Do not concatenate text displayed with `setText`. Use resource string with placeholders."
+        errorLine1="                        &quot;${b.sala?.name ?: &quot;Sala #${b.roomId}&quot;}\n&quot; +"
+        errorLine2="                        ^">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/manager/bookings/BookingDetailFragment.kt"
+            line="75"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="Do not concatenate text displayed with `setText`. Use resource string with placeholders."
+        errorLine1="                                &quot;${b.fecha}\n&quot; +"
+        errorLine2="                                ~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/manager/bookings/BookingDetailFragment.kt"
+            line="76"
+            column="33"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="Do not concatenate text displayed with `setText`. Use resource string with placeholders."
+        errorLine1="                                &quot;${b.horaInicio} → ${b.horaFin}\n&quot; +"
+        errorLine2="                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/manager/bookings/BookingDetailFragment.kt"
+            line="77"
+            column="33"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="Do not concatenate text displayed with `setText`. Use resource string with placeholders."
+        errorLine1="                                &quot;${b.numPeople} personas\n&quot; +"
+        errorLine2="                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/manager/bookings/BookingDetailFragment.kt"
+            line="78"
+            column="33"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="String literal in `setText` can not be translated. Use Android resources instead."
+        errorLine1="                                &quot;${b.numPeople} personas\n&quot; +"
+        errorLine2="                                               ~~~~~~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/manager/bookings/BookingDetailFragment.kt"
+            line="78"
+            column="48"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="Do not concatenate text displayed with `setText`. Use resource string with placeholders."
+        errorLine1="                    binding.tvStatus.text = &quot;Estado: ${b.estado.replaceFirstChar { it.uppercase() }}&quot;"
+        errorLine2="                                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/manager/bookings/BookingDetailFragment.kt"
+            line="80"
+            column="45"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="String literal in `setText` can not be translated. Use Android resources instead."
+        errorLine1="                    binding.tvStatus.text = &quot;Estado: ${b.estado.replaceFirstChar { it.uppercase() }}&quot;"
+        errorLine2="                                             ~~~~~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/manager/bookings/BookingDetailFragment.kt"
+            line="80"
+            column="46"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="Do not concatenate text displayed with `setText`. Use resource string with placeholders."
+        errorLine1="            binding.tvDateTime.text = &quot;${booking.fecha} · ${booking.horaInicio}&quot;"
+        errorLine2="                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/adapters/BookingsAdapter.kt"
+            line="25"
+            column="39"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="Do not concatenate text displayed with `setText`. Use resource string with placeholders."
+        errorLine1="            binding.tvNumPeople.text = &quot;${booking.numPeople} personas&quot;"
+        errorLine2="                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/adapters/BookingsAdapter.kt"
+            line="26"
+            column="40"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="String literal in `setText` can not be translated. Use Android resources instead."
+        errorLine1="            binding.tvNumPeople.text = &quot;${booking.numPeople} personas&quot;"
+        errorLine2="                                                            ~~~~~~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/adapters/BookingsAdapter.kt"
+            line="26"
+            column="61"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="Do not concatenate text displayed with `setText`. Use resource string with placeholders."
+        errorLine1="            if (&quot;datetime&quot; in changed) binding.tvDateTime.text = &quot;${booking.fecha} · ${booking.horaInicio}&quot;"
+        errorLine2="                                                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/adapters/BookingsAdapter.kt"
+            line="33"
+            column="66"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="Do not concatenate text displayed with `setText`. Use resource string with placeholders."
+        errorLine1="            if (&quot;numPeople&quot; in changed) binding.tvNumPeople.text = &quot;${booking.numPeople} personas&quot;"
+        errorLine2="                                                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/adapters/BookingsAdapter.kt"
+            line="34"
+            column="68"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="String literal in `setText` can not be translated. Use Android resources instead."
+        errorLine1="            if (&quot;numPeople&quot; in changed) binding.tvNumPeople.text = &quot;${booking.numPeople} personas&quot;"
+        errorLine2="                                                                                        ~~~~~~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/adapters/BookingsAdapter.kt"
+            line="34"
+            column="89"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="String literal in `setText` can not be translated. Use Android resources instead."
+        errorLine1="            binding.tvTitle.text = &quot;Editar Sala&quot;"
+        errorLine2="                                    ~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/manager/rooms/CreateEditRoomFragment.kt"
+            line="61"
+            column="37"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="Do not concatenate text displayed with `setText`. Use resource string with placeholders."
+        errorLine1="            binding.tvGameTitle.text  = &quot;Partida #${game.id}&quot;"
+        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/gamemaster/dashboard/GmGamesAdapter.kt"
+            line="25"
+            column="41"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="String literal in `setText` can not be translated. Use Android resources instead."
+        errorLine1="            binding.tvGameTitle.text  = &quot;Partida #${game.id}&quot;"
+        errorLine2="                                         ~~~~~~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/gamemaster/dashboard/GmGamesAdapter.kt"
+            line="25"
+            column="42"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="Do not concatenate text displayed with `setText`. Use resource string with placeholders."
+        errorLine1="            binding.tvGamemaster.text = &quot;GM: ${game.gamemaster.name}&quot;"
+        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/gamemaster/dashboard/GmGamesAdapter.kt"
+            line="26"
+            column="41"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="String literal in `setText` can not be translated. Use Android resources instead."
+        errorLine1="            binding.tvGamemaster.text = &quot;GM: ${game.gamemaster.name}&quot;"
+        errorLine2="                                         ~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/gamemaster/dashboard/GmGamesAdapter.kt"
+            line="26"
+            column="42"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="Do not concatenate text displayed with `setText`. Use resource string with placeholders."
+        errorLine1="            binding.tvStartTime.text  = &quot;Inicio: ${game.startTime?.take(16)?.replace(&quot;T&quot;, &quot; &quot;) ?: &quot;-&quot;}&quot;"
+        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/gamemaster/dashboard/GmGamesAdapter.kt"
+            line="27"
+            column="41"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="String literal in `setText` can not be translated. Use Android resources instead."
+        errorLine1="            binding.tvStartTime.text  = &quot;Inicio: ${game.startTime?.take(16)?.replace(&quot;T&quot;, &quot; &quot;) ?: &quot;-&quot;}&quot;"
+        errorLine2="                                         ~~~~~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/gamemaster/dashboard/GmGamesAdapter.kt"
+            line="27"
+            column="42"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="Do not concatenate text displayed with `setText`. Use resource string with placeholders."
+        errorLine1="            binding.tvHints.text      = &quot;Pistas: ${game.hintsUsed}&quot;"
+        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/gamemaster/dashboard/GmGamesAdapter.kt"
+            line="28"
+            column="41"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="String literal in `setText` can not be translated. Use Android resources instead."
+        errorLine1="            binding.tvHints.text      = &quot;Pistas: ${game.hintsUsed}&quot;"
+        errorLine2="                                         ~~~~~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/gamemaster/dashboard/GmGamesAdapter.kt"
+            line="28"
+            column="42"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="String literal in `setText` can not be translated. Use Android resources instead."
+        errorLine1="                binding.tvStatus.text = &quot;Resuelta&quot;"
+        errorLine2="                                         ~~~~~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/adapters/IncidentsAdapter.kt"
+            line="26"
+            column="42"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="String literal in `setText` can not be translated. Use Android resources instead."
+        errorLine1="                binding.tvStatus.text = &quot;Pendiente&quot;"
+        errorLine2="                                         ~~~~~~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/adapters/IncidentsAdapter.kt"
+            line="32"
+            column="42"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="Do not concatenate text displayed with `setText`. Use resource string with placeholders."
+        errorLine1="        binding.tvWelcome.text = &quot;Bienvenido, ${appSessionManager.userName ?: &quot;Manager&quot;}&quot;"
+        errorLine2="                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/manager/dashboard/ManagerDashboardFragment.kt"
+            line="42"
+            column="34"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="String literal in `setText` can not be translated. Use Android resources instead."
+        errorLine1="        binding.tvWelcome.text = &quot;Bienvenido, ${appSessionManager.userName ?: &quot;Manager&quot;}&quot;"
+        errorLine2="                                  ~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/manager/dashboard/ManagerDashboardFragment.kt"
+            line="42"
+            column="35"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="Do not concatenate text displayed with `setText`. Use resource string with placeholders."
+        errorLine1="            binding.tvCapacity.text = &quot;${room.capacity} personas&quot;"
+        errorLine2="                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/adapters/RoomsAdapter.kt"
+            line="22"
+            column="39"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="String literal in `setText` can not be translated. Use Android resources instead."
+        errorLine1="            binding.tvCapacity.text = &quot;${room.capacity} personas&quot;"
+        errorLine2="                                                       ~~~~~~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/adapters/RoomsAdapter.kt"
+            line="22"
+            column="56"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="Do not concatenate text displayed with `setText`. Use resource string with placeholders."
+        errorLine1="                binding.tvStatsTotalBookings.text = &quot;Reservas totales: ${d.totalBookings}&quot;"
+        errorLine2="                                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/manager/stats/StatsFragment.kt"
+            line="54"
+            column="53"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="String literal in `setText` can not be translated. Use Android resources instead."
+        errorLine1="                binding.tvStatsTotalBookings.text = &quot;Reservas totales: ${d.totalBookings}&quot;"
+        errorLine2="                                                     ~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/manager/stats/StatsFragment.kt"
+            line="54"
+            column="54"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="Do not concatenate text displayed with `setText`. Use resource string with placeholders."
+        errorLine1="                binding.tvStatsEscapeRate.text = &quot;Tasa escape global: ${&quot;%.1f&quot;.format(d.escapeRate)}%&quot;"
+        errorLine2="                                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/manager/stats/StatsFragment.kt"
+            line="55"
+            column="50"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="String literal in `setText` can not be translated. Use Android resources instead."
+        errorLine1="                binding.tvStatsEscapeRate.text = &quot;Tasa escape global: ${&quot;%.1f&quot;.format(d.escapeRate)}%&quot;"
+        errorLine2="                                                  ~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/manager/stats/StatsFragment.kt"
+            line="55"
+            column="51"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="String literal in `setText` can not be translated. Use Android resources instead."
+        errorLine1="                binding.tvStatsEscapeRate.text = &quot;Tasa escape global: ${&quot;%.1f&quot;.format(d.escapeRate)}%&quot;"
+        errorLine2="                                                                         ~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/manager/stats/StatsFragment.kt"
+            line="55"
+            column="74"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="Do not concatenate text displayed with `setText`. Use resource string with placeholders."
+        errorLine1="                binding.tvStatsTopRoom.text = &quot;Sala más popular: ${d.topRoom ?: &quot;—&quot;}&quot;"
+        errorLine2="                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/manager/stats/StatsFragment.kt"
+            line="56"
+            column="47"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="String literal in `setText` can not be translated. Use Android resources instead."
+        errorLine1="                binding.tvStatsTopRoom.text = &quot;Sala más popular: ${d.topRoom ?: &quot;—&quot;}&quot;"
+        errorLine2="                                               ~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/manager/stats/StatsFragment.kt"
+            line="56"
+            column="48"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="Do not concatenate text displayed with `setText`. Use resource string with placeholders."
+        errorLine1="                binding.tvStatsPendingIncidents.text = &quot;Incidencias pendientes: ${d.pendingIncidents}&quot;"
+        errorLine2="                                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/manager/stats/StatsFragment.kt"
+            line="57"
+            column="56"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="String literal in `setText` can not be translated. Use Android resources instead."
+        errorLine1="                binding.tvStatsPendingIncidents.text = &quot;Incidencias pendientes: ${d.pendingIncidents}&quot;"
+        errorLine2="                                                        ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/manager/stats/StatsFragment.kt"
+            line="57"
+            column="57"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="Do not concatenate text displayed with `setText`. Use resource string with placeholders."
+        errorLine1="                            text = &quot;${index + 1}. ${entry.room} — ${entry.totalGames} partidas&quot; +"
+        errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/manager/stats/StatsFragment.kt"
+            line="160"
+            column="36"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="Do not concatenate text displayed with `setText`. Use resource string with placeholders."
+        errorLine1="                            text = &quot;${index + 1}. ${entry.room} — ${entry.totalGames} partidas&quot; +"
+        errorLine2="                                   ^">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/manager/stats/StatsFragment.kt"
+            line="160"
+            column="36"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="Do not concatenate text displayed with `setText`. Use resource string with placeholders."
+        errorLine1="                            text = &quot;${index + 1}. ${entry.room} — ${entry.totalGames} partidas&quot; +"
+        errorLine2="                                   ^">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/manager/stats/StatsFragment.kt"
+            line="160"
+            column="36"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="Do not concatenate text displayed with `setText`. Use resource string with placeholders."
+        errorLine1="                            text = &quot;${index + 1}. ${entry.room} — ${entry.totalGames} partidas&quot; +"
+        errorLine2="                                      ~~~~~~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/manager/stats/StatsFragment.kt"
+            line="160"
+            column="39"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="String literal in `setText` can not be translated. Use Android resources instead."
+        errorLine1="                            text = &quot;${index + 1}. ${entry.room} — ${entry.totalGames} partidas&quot; +"
+        errorLine2="                                                                                     ~~~~~~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/manager/stats/StatsFragment.kt"
+            line="160"
+            column="86"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="Do not concatenate text displayed with `setText`. Use resource string with placeholders."
+        errorLine1="                                   &quot; · ${&quot;%.1f&quot;.format(entry.tasaEscape)}% escape&quot; +"
+        errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/manager/stats/StatsFragment.kt"
+            line="161"
+            column="36"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="String literal in `setText` can not be translated. Use Android resources instead."
+        errorLine1="                                   &quot; · ${&quot;%.1f&quot;.format(entry.tasaEscape)}% escape&quot; +"
+        errorLine2="                                          ~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/manager/stats/StatsFragment.kt"
+            line="161"
+            column="43"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="String literal in `setText` can not be translated. Use Android resources instead."
+        errorLine1="                                   &quot; · ${&quot;%.1f&quot;.format(entry.tasaEscape)}% escape&quot; +"
+        errorLine2="                                                                         ~~~~~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/manager/stats/StatsFragment.kt"
+            line="161"
+            column="74"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="Do not concatenate text displayed with `setText`. Use resource string with placeholders."
+        errorLine1="                                   &quot; · score ${&quot;%.1f&quot;.format(entry.score)}&quot;"
+        errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/manager/stats/StatsFragment.kt"
+            line="162"
+            column="36"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="String literal in `setText` can not be translated. Use Android resources instead."
+        errorLine1="                                   &quot; · score ${&quot;%.1f&quot;.format(entry.score)}&quot;"
+        errorLine2="                                    ~~~~~~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/manager/stats/StatsFragment.kt"
+            line="162"
+            column="37"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="String literal in `setText` can not be translated. Use Android resources instead."
+        errorLine1="                                   &quot; · score ${&quot;%.1f&quot;.format(entry.score)}&quot;"
+        errorLine2="                                                ~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/manager/stats/StatsFragment.kt"
+            line="162"
+            column="49"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Grupo&quot;, should use `@string` resource"
+        errorLine1="                android:text=&quot;Grupo&quot;"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_active_game.xml"
+            line="26"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;⏱ TIEMPO&quot;, should use `@string` resource"
+        errorLine1="                    android:text=&quot;⏱ TIEMPO&quot;"
+        errorLine2="                    ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_active_game.xml"
+            line="59"
+            column="21"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;00:00:00&quot;, should use `@string` resource"
+        errorLine1="                    android:text=&quot;00:00:00&quot;"
+        errorLine2="                    ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_active_game.xml"
+            line="69"
+            column="21"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Pistas utilizadas&quot;, should use `@string` resource"
+        errorLine1="                    android:text=&quot;Pistas utilizadas&quot;"
+        errorLine2="                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_active_game.xml"
+            line="95"
+            column="21"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;0&quot;, should use `@string` resource"
+        errorLine1="                        android:text=&quot;0&quot;"
+        errorLine2="                        ~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_active_game.xml"
+            line="111"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;+ Pista&quot;, should use `@string` resource"
+        errorLine1="                        android:text=&quot;+ Pista&quot;"
+        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_active_game.xml"
+            line="121"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Cerrar partida&quot;, should use `@string` resource"
+        errorLine1="                    android:text=&quot;Cerrar partida&quot;"
+        errorLine2="                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_active_game.xml"
+            line="147"
+            column="21"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Observaciones (opcional)&quot;, should use `@string` resource"
+        errorLine1="                    android:hint=&quot;Observaciones (opcional)&quot;"
+        errorLine2="                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_active_game.xml"
+            line="157"
+            column="21"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Escaparon&quot;, should use `@string` resource"
+        errorLine1="                        android:text=&quot;Escaparon&quot;"
+        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_active_game.xml"
+            line="178"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;No escaparon&quot;, should use `@string` resource"
+        errorLine1="                        android:text=&quot;No escaparon&quot;"
+        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_active_game.xml"
+            line="188"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;← Volver&quot;, should use `@string` resource"
+        errorLine1="            android:text=&quot;← Volver&quot;"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_booking_detail.xml"
+            line="23"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Detalle de Reserva&quot;, should use `@string` resource"
+        errorLine1="            android:text=&quot;Detalle de Reserva&quot;"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_booking_detail.xml"
+            line="30"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Reserva&quot;, should use `@string` resource"
+        errorLine1="                        android:text=&quot;Reserva&quot;"
+        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_booking_detail.xml"
+            line="63"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;QR de la reserva&quot;, should use `@string` resource"
+        errorLine1="                        android:text=&quot;QR de la reserva&quot;"
+        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_booking_detail.xml"
+            line="96"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Reenviar QR por email&quot;, should use `@string` resource"
+        errorLine1="                        android:text=&quot;Reenviar QR por email&quot;"
+        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_booking_detail.xml"
+            line="118"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Cancelar&quot;, should use `@string` resource"
+        errorLine1="                            android:text=&quot;Cancelar&quot; />"
+        errorLine2="                            ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_booking_detail.xml"
+            line="134"
+            column="29"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Toca para filtrar por fecha&quot;, should use `@string` resource"
+        errorLine1="                android:hint=&quot;Toca para filtrar por fecha&quot;"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_bookings.xml"
+            line="28"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Filtrar&quot;, should use `@string` resource"
+        errorLine1="                android:text=&quot;Filtrar&quot; />"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_bookings.xml"
+            line="44"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Todo&quot;, should use `@string` resource"
+        errorLine1="                android:text=&quot;Todo&quot;"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_bookings.xml"
+            line="51"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Nueva reserva&quot;, should use `@string` resource"
+        errorLine1="        android:contentDescription=&quot;Nueva reserva&quot;"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_bookings.xml"
+            line="92"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;← Volver&quot;, should use `@string` resource"
+        errorLine1="            android:text=&quot;← Volver&quot;"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_create_booking.xml"
+            line="22"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Nueva Reserva&quot;, should use `@string` resource"
+        errorLine1="            android:text=&quot;Nueva Reserva&quot;"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_create_booking.xml"
+            line="29"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Sala&quot;, should use `@string` resource"
+        errorLine1="                        android:text=&quot;Sala&quot;"
+        errorLine2="                        ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_create_booking.xml"
+            line="62"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Nombre del grupo&quot;, should use `@string` resource"
+        errorLine1="                        android:hint=&quot;Nombre del grupo&quot;"
+        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_create_booking.xml"
+            line="78"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Email del cliente (recibirá el QR)&quot;, should use `@string` resource"
+        errorLine1="                        android:hint=&quot;Email del cliente (recibirá el QR)&quot;"
+        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_create_booking.xml"
+            line="91"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Número de personas&quot;, should use `@string` resource"
+        errorLine1="                        android:hint=&quot;Número de personas&quot;"
+        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_create_booking.xml"
+            line="105"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Fecha (YYYY-MM-DD)&quot;, should use `@string` resource"
+        errorLine1="                        android:hint=&quot;Fecha (YYYY-MM-DD)&quot;"
+        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_create_booking.xml"
+            line="119"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Hora inicio (HH:MM)&quot;, should use `@string` resource"
+        errorLine1="                        android:hint=&quot;Hora inicio (HH:MM)&quot;"
+        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_create_booking.xml"
+            line="133"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Hora fin (HH:MM)&quot;, should use `@string` resource"
+        errorLine1="                        android:hint=&quot;Hora fin (HH:MM)&quot;"
+        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_create_booking.xml"
+            line="147"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;📧&quot;, should use `@string` resource"
+        errorLine1="                            android:text=&quot;📧&quot;"
+        errorLine2="                            ~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_create_booking.xml"
+            line="168"
+            column="29"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;El QR se enviará automáticamente al email del cliente al crear la reserva.&quot;, should use `@string` resource"
+        errorLine1="                            android:text=&quot;El QR se enviará automáticamente al email del cliente al crear la reserva.&quot;"
+        errorLine2="                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_create_booking.xml"
+            line="175"
+            column="29"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Crear Reserva y Enviar QR&quot;, should use `@string` resource"
+        errorLine1="                        android:text=&quot;Crear Reserva y Enviar QR&quot; />"
+        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_create_booking.xml"
+            line="185"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;← Volver&quot;, should use `@string` resource"
+        errorLine1="            android:text=&quot;← Volver&quot;"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_create_edit_room.xml"
+            line="23"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Nueva Sala&quot;, should use `@string` resource"
+        errorLine1="            android:text=&quot;Nueva Sala&quot;"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_create_edit_room.xml"
+            line="31"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Nombre de la sala&quot;, should use `@string` resource"
+        errorLine1="                        android:hint=&quot;Nombre de la sala&quot;"
+        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_create_edit_room.xml"
+            line="65"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Temática&quot;, should use `@string` resource"
+        errorLine1="                        android:hint=&quot;Temática&quot;"
+        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_create_edit_room.xml"
+            line="80"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Capacidad (personas)&quot;, should use `@string` resource"
+        errorLine1="                        android:hint=&quot;Capacidad (personas)&quot;"
+        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_create_edit_room.xml"
+            line="95"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Dificultad&quot;, should use `@string` resource"
+        errorLine1="                        android:text=&quot;Dificultad&quot;"
+        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_create_edit_room.xml"
+            line="108"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Sala activa&quot;, should use `@string` resource"
+        errorLine1="                        android:text=&quot;Sala activa&quot;"
+        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_create_edit_room.xml"
+            line="125"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Reportar Incidencia&quot;, should use `@string` resource"
+        errorLine1="                    android:text=&quot;Reportar Incidencia&quot;"
+        errorLine2="                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_create_incident.xml"
+            line="29"
+            column="21"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Sala&quot;, should use `@string` resource"
+        errorLine1="                    android:text=&quot;Sala&quot;"
+        errorLine2="                    ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_create_incident.xml"
+            line="38"
+            column="21"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Descripción del problema&quot;, should use `@string` resource"
+        errorLine1="                    android:hint=&quot;Descripción del problema&quot;"
+        errorLine2="                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_create_incident.xml"
+            line="54"
+            column="21"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Reportar incidencia&quot;, should use `@string` resource"
+        errorLine1="                    android:text=&quot;Reportar incidencia&quot; />"
+        errorLine2="                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_create_incident.xml"
+            line="70"
+            column="21"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Mis Partidas&quot;, should use `@string` resource"
+        errorLine1="            android:text=&quot;Mis Partidas&quot;"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_gm_dashboard.xml"
+            line="20"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Partidas asignadas a tu turno&quot;, should use `@string` resource"
+        errorLine1="            android:text=&quot;Partidas asignadas a tu turno&quot;"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_gm_dashboard.xml"
+            line="29"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;No hay partidas en tu turno&quot;, should use `@string` resource"
+        errorLine1="        android:text=&quot;No hay partidas en tu turno&quot;"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_gm_dashboard.xml"
+            line="46"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Salir&quot;, should use `@string` resource"
+        errorLine1="            android:text=&quot;Salir&quot;"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_gm_main.xml"
+            line="24"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Solo pendientes&quot;, should use `@string` resource"
+        errorLine1="        android:text=&quot;Solo pendientes&quot;"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_incidents.xml"
+            line="31"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;🔐&quot;, should use `@string` resource"
+        errorLine1="                android:text=&quot;🔐&quot;"
+        errorLine2="                ~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_login.xml"
+            line="27"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;EscapeManager&quot;, should use `@string` resource"
+        errorLine1="                android:text=&quot;EscapeManager&quot;"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_login.xml"
+            line="34"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Gestión operativa de escape rooms&quot;, should use `@string` resource"
+        errorLine1="                android:text=&quot;Gestión operativa de escape rooms&quot;"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_login.xml"
+            line="42"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Iniciar sesión&quot;, should use `@string` resource"
+        errorLine1="                    android:text=&quot;Iniciar sesión&quot;"
+        errorLine2="                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_login.xml"
+            line="65"
+            column="21"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Bienvenido, Manager&quot;, should use `@string` resource"
+        errorLine1="            android:text=&quot;Bienvenido, Manager&quot;"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_manager_dashboard.xml"
+            line="18"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;--&quot;, should use `@string` resource"
+        errorLine1="                        android:text=&quot;--&quot;"
+        errorLine2="                        ~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_manager_dashboard.xml"
+            line="50"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Reservas totales&quot;, should use `@string` resource"
+        errorLine1="                        android:text=&quot;Reservas totales&quot;"
+        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_manager_dashboard.xml"
+            line="57"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;--&quot;, should use `@string` resource"
+        errorLine1="                        android:text=&quot;--&quot;"
+        errorLine2="                        ~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_manager_dashboard.xml"
+            line="81"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Partidas activas&quot;, should use `@string` resource"
+        errorLine1="                        android:text=&quot;Partidas activas&quot;"
+        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_manager_dashboard.xml"
+            line="88"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;--&quot;, should use `@string` resource"
+        errorLine1="                        android:text=&quot;--&quot;"
+        errorLine2="                        ~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_manager_dashboard.xml"
+            line="112"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Salas&quot;, should use `@string` resource"
+        errorLine1="                        android:text=&quot;Salas&quot;"
+        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_manager_dashboard.xml"
+            line="119"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;--&quot;, should use `@string` resource"
+        errorLine1="                        android:text=&quot;--&quot;"
+        errorLine2="                        ~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_manager_dashboard.xml"
+            line="143"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Incidencias&quot;, should use `@string` resource"
+        errorLine1="                        android:text=&quot;Incidencias&quot;"
+        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_manager_dashboard.xml"
+            line="150"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Salir&quot;, should use `@string` resource"
+        errorLine1="            android:text=&quot;Salir&quot;"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_manager_main.xml"
+            line="25"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Apunta al código QR de la reserva&quot;, should use `@string` resource"
+        errorLine1="        android:text=&quot;Apunta al código QR de la reserva&quot;"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_qr_scanner.xml"
+            line="28"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Añadir sala&quot;, should use `@string` resource"
+        errorLine1="        android:contentDescription=&quot;Añadir sala&quot;"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_rooms.xml"
+            line="50"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Estadísticas&quot;, should use `@string` resource"
+        errorLine1="                android:text=&quot;Estadísticas&quot;"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_stats.xml"
+            line="23"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Resumen global&quot;, should use `@string` resource"
+        errorLine1="                        android:text=&quot;Resumen global&quot;"
+        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_stats.xml"
+            line="51"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Tasa de Escape por Sala&quot;, should use `@string` resource"
+        errorLine1="                        android:text=&quot;Tasa de Escape por Sala&quot;"
+        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_stats.xml"
+            line="101"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Ocupación por Franja Horaria&quot;, should use `@string` resource"
+        errorLine1="                        android:text=&quot;Ocupación por Franja Horaria&quot;"
+        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_stats.xml"
+            line="128"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Promedio de Pistas por Sala&quot;, should use `@string` resource"
+        errorLine1="                        android:text=&quot;Promedio de Pistas por Sala&quot;"
+        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_stats.xml"
+            line="155"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Ranking de Salas&quot;, should use `@string` resource"
+        errorLine1="                        android:text=&quot;Ranking de Salas&quot;"
+        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_stats.xml"
+            line="181"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Marcar como resuelta&quot;, should use `@string` resource"
+        errorLine1="            android:text=&quot;Marcar como resuelta&quot; />"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/item_incident.xml"
+            line="64"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Mis Partidas&quot;, should use `@string` resource"
+        errorLine1="        android:title=&quot;Mis Partidas&quot; />"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/menu/menu_gm_bottom_nav.xml"
+            line="6"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Escanear QR&quot;, should use `@string` resource"
+        errorLine1="        android:title=&quot;Escanear QR&quot; />"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/menu/menu_gm_bottom_nav.xml"
+            line="10"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Incidencias&quot;, should use `@string` resource"
+        errorLine1="        android:title=&quot;Incidencias&quot; />"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/menu/menu_gm_bottom_nav.xml"
+            line="14"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Dashboard&quot;, should use `@string` resource"
+        errorLine1="        android:title=&quot;Dashboard&quot; />"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/menu/menu_manager_bottom_nav.xml"
+            line="6"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Salas&quot;, should use `@string` resource"
+        errorLine1="        android:title=&quot;Salas&quot; />"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/menu/menu_manager_bottom_nav.xml"
+            line="10"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Reservas&quot;, should use `@string` resource"
+        errorLine1="        android:title=&quot;Reservas&quot; />"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/menu/menu_manager_bottom_nav.xml"
+            line="14"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Estadísticas&quot;, should use `@string` resource"
+        errorLine1="        android:title=&quot;Estadísticas&quot; />"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/menu/menu_manager_bottom_nav.xml"
+            line="18"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Incidencias&quot;, should use `@string` resource"
+        errorLine1="        android:title=&quot;Incidencias&quot; />"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/menu/menu_manager_bottom_nav.xml"
+            line="22"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="NullSafeMutableLiveData"
+        message="Expected non-nullable value"
+        errorLine1="                _summary.value   = summaryDeferred.await()"
+        errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/manager/stats/StatsViewModel.kt"
+            line="76"
+            column="36"/>
+    </issue>
+
+    <issue
+        id="NullSafeMutableLiveData"
+        message="Expected non-nullable value"
+        errorLine1="                _occupancy.value = occupancyDeferred.await()"
+        errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/javiermontillaarias/escapemanager/ui/manager/stats/StatsViewModel.kt"
+            line="77"
+            column="36"/>
+    </issue>
+
+</issues>

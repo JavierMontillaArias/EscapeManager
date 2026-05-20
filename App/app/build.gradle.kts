@@ -23,14 +23,12 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField("String", "BASE_URL", "\"http://10.0.2.2:8000/\"")
+            buildConfigField("String", "BASE_URL", "\"https://escapemanager-production.up.railway.app/\"")
         }
         release {
             isMinifyEnabled = true
             isShrinkResources = true
-            // C6: Reemplaza con la URL real del servidor de producción antes de distribuir
-            // Ejemplo Railway: "https://escapemanager-production.up.railway.app/"
-            buildConfigField("String", "BASE_URL", "\"https://api.tudominio.com/\"")
+            buildConfigField("String", "BASE_URL", "\"https://escapemanager-production.up.railway.app/\"")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -45,6 +43,10 @@ android {
 
     kotlinOptions {
         jvmTarget = "17"
+    }
+
+    lint {
+        baseline = file("lint-baseline.xml")
     }
 }
 

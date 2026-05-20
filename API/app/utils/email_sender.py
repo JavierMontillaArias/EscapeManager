@@ -1,12 +1,11 @@
 import html
-import ssl
-import smtplib
 import logging
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-from email.mime.image import MIMEImage
-from email.mime.base import MIMEBase
-from email import encoders
+import base64
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import (
+    Mail, Attachment, FileContent, FileName,
+    FileType, Disposition, ContentId
+)
 
 from app.config import settings
 
@@ -19,7 +18,6 @@ def _mask_email(email: str) -> str:
 
 
 def _build_html_body(nombre_grupo: str, sala: str, fecha: str, hora_inicio: str, hora_fin: str) -> str:
-    # S-2: html.escape() en todos los campos interpolados para prevenir inyección HTML en clientes de correo
     nombre_grupo_safe = html.escape(nombre_grupo)
     sala_safe = html.escape(sala)
     fecha_safe = html.escape(fecha)
@@ -67,7 +65,7 @@ def _build_html_body(nombre_grupo: str, sala: str, fecha: str, hora_inicio: str,
                     </p>
                 </div>
                 <div class="footer">
-                    <p>EscapeManager © 2025</p>
+                    <p>EscapeManager © {__import__('datetime').datetime.now().year}</p>
                 </div>
             </div>
         </div>
@@ -85,76 +83,39 @@ def send_booking_confirmation(
     sala: str,
     qr_bytes: bytes,
 ) -> bool:
-    """
-    Envía el email de confirmación con el QR adjunto e inline.
-
-    Returns:
-        True si se envió correctamente, False si hubo error.
-        Los errores se loggean pero no se propagan para no bloquear
-        la creación de la reserva.
-    """
-    if not settings.SMTP_USER or not settings.SMTP_PASSWORD:
-        logger.warning("SMTP no configurado. Email no enviado para %s", _mask_email(email))
+    if not settings.SENDGRID_API_KEY:
+        logger.warning("SendGrid no configurado. Email no enviado para %s", _mask_email(email))
         return False
 
     try:
-        msg = MIMEMultipart("related")
-        msg["Subject"] = f"Confirmación de reserva — {sala} — {fecha}"
-        msg["From"] = settings.SMTP_FROM or settings.SMTP_USER
-        msg["To"] = email
-
-        msg_alternative = MIMEMultipart("alternative")
-        msg.attach(msg_alternative)
-
-        text_plain = (
-            f"Confirmación de reserva\n\n"
-            f"Grupo: {nombre_grupo}\nSala: {sala}\n"
-            f"Fecha: {fecha}\nHorario: {hora_inicio} – {hora_fin}\n\n"
-            f"Adjunto encontrarás tu código QR de acceso."
-        )
-        msg_alternative.attach(MIMEText(text_plain, "plain", "utf-8"))
-        msg_alternative.attach(
-            MIMEText(
-                _build_html_body(nombre_grupo, sala, fecha, hora_inicio, hora_fin),
-                "html",
-                "utf-8",
-            )
+        message = Mail(
+            from_email=settings.SMTP_FROM or settings.SMTP_USER,
+            to_emails=email,
+            subject=f"Confirmación de reserva — {sala} — {fecha}",
+            html_content=_build_html_body(nombre_grupo, sala, fecha, hora_inicio, hora_fin),
         )
 
-        # QR embebido inline en el HTML
-        qr_image = MIMEImage(qr_bytes, _subtype="png")
-        qr_image.add_header("Content-ID", "<qr_code>")
-        qr_image.add_header("Content-Disposition", "inline", filename="qr_acceso.png")
-        msg.attach(qr_image)
+        # QR como adjunto
+        encoded_qr = base64.b64encode(qr_bytes).decode()
+        attachment = Attachment(
+            FileContent(encoded_qr),
+            FileName("qr_acceso.png"),
+            FileType("image/png"),
+            Disposition("attachment"),
+            ContentId("qr_code")
+        )
+        message.attachment = attachment
 
-        # QR también como adjunto descargable
-        qr_attachment = MIMEBase("image", "png")
-        qr_attachment.set_payload(qr_bytes)
-        encoders.encode_base64(qr_attachment)
-        qr_attachment.add_header("Content-Disposition", "attachment", filename="qr_acceso.png")
-        msg.attach(qr_attachment)
+        sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
+        response = sg.send(message)
 
-        # S-04: ssl.create_default_context() verifica el certificado del servidor SMTP.
-        tls_context = ssl.create_default_context()
-        with smtplib.SMTP(settings.SMTP_HOST, settings.SMTP_PORT) as server:
-            server.ehlo()
-            server.starttls(context=tls_context)
-            server.login(settings.SMTP_USER, settings.SMTP_PASSWORD)
-            server.sendmail(
-                from_addr=settings.SMTP_FROM or settings.SMTP_USER,
-                to_addrs=[email],
-                msg=msg.as_string(),
-            )
+        if response.status_code in (200, 202):
+            logger.info("Email enviado a %s", _mask_email(email))
+            return True
+        else:
+            logger.error("SendGrid respondió con status %d", response.status_code)
+            return False
 
-        logger.info("Email enviado a %s", _mask_email(email))
-        return True
-
-    except smtplib.SMTPAuthenticationError:
-        logger.error("Error de autenticación SMTP.")
-        return False
-    except smtplib.SMTPException as e:
-        logger.error("Error SMTP: %s", str(e))
-        return False
     except Exception as e:
         logger.error("Error inesperado al enviar email: %s", str(e))
         return False

@@ -41,7 +41,6 @@ class QrScannerFragment : Fragment() {
     private val viewModel: QrScannerViewModel by viewModels {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                // B-03: singleton SessionManager desde la Application
                 val sm = (requireActivity().application as EscapeManagerApp).sessionManager
                 val api = RetrofitClient.getApiService(sm)
                 @Suppress("UNCHECKED_CAST")
@@ -72,13 +71,6 @@ class QrScannerFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         cameraExecutor = Executors.newSingleThreadExecutor()
 
-        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
-            == PackageManager.PERMISSION_GRANTED) {
-            startCamera()
-        } else {
-            permissionLauncher.launch(Manifest.permission.CAMERA)
-        }
-
         viewModel.scanResult.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is Resource.Idle -> hideStatus()
@@ -104,6 +96,21 @@ class QrScannerFragment : Fragment() {
                 }
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
+            == PackageManager.PERMISSION_GRANTED) {
+            startCamera()
+        } else {
+            permissionLauncher.launch(Manifest.permission.CAMERA)
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        cameraProvider?.unbindAll()
     }
 
     private fun startCamera() {
@@ -154,8 +161,6 @@ class QrScannerFragment : Fragment() {
                 for (barcode in barcodes) {
                     if (barcode.format == Barcode.FORMAT_QR_CODE) {
                         val rawValue = barcode.rawValue ?: continue
-                        // B-02: llamada directa a validateQr — viewModelScope usa Main dispatcher,
-                        // no necesita runOnUiThread. activity? evita crash si el Fragment se destruyó.
                         activity ?: return@addOnSuccessListener
                         viewModel.validateQr(rawValue)
                         break
@@ -178,7 +183,6 @@ class QrScannerFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         try {
-            // B-07: desvincular cámara antes de cerrar el executor para evitar frames huérfanos
             cameraProvider?.unbindAll()
             cameraExecutor.shutdownNow()
             barcodeScanner.close()
