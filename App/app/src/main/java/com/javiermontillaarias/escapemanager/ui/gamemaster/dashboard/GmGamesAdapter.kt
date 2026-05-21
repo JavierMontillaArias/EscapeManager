@@ -9,6 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.javiermontillaarias.escapemanager.R
 import com.javiermontillaarias.escapemanager.data.model.Game
 import com.javiermontillaarias.escapemanager.databinding.ItemGameBinding
+import java.time.Instant
+import java.time.ZoneId
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 
 class GmGamesAdapter(
     private val onGameClick: (Game) -> Unit
@@ -24,7 +28,7 @@ class GmGamesAdapter(
         fun bind(game: Game) {
             binding.tvGameTitle.text  = "Partida #${game.id}"
             binding.tvGamemaster.text = "GM: ${game.gamemaster.name}"
-            binding.tvStartTime.text  = "Inicio: ${game.startTime?.take(16)?.replace("T", " ") ?: "-"}"
+            binding.tvStartTime.text  = "Inicio: ${formatLocalTime(game.startTime)}"
             binding.tvHints.text      = "Pistas: ${game.hintsUsed}"
 
             val statusText = when {
@@ -45,13 +49,24 @@ class GmGamesAdapter(
                 ContextCompat.getColor(binding.root.context, colorRes)
             )
 
-            // Solo partidas en curso son navegables
             if (game.endTime == null) {
                 binding.root.setOnClickListener { onGameClick(game) }
                 binding.root.alpha = 1.0f
             } else {
                 binding.root.setOnClickListener(null)
                 binding.root.alpha = 0.7f
+            }
+        }
+
+        private fun formatLocalTime(utcTime: String?): String {
+            if (utcTime.isNullOrBlank()) return "-"
+            return try {
+                val instant = Instant.parse(utcTime + "Z")
+                val madrid = ZoneId.of("Europe/Madrid")
+                val local = ZonedDateTime.ofInstant(instant, madrid)
+                local.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
+            } catch (e: Exception) {
+                utcTime.take(16).replace("T", " ")
             }
         }
     }

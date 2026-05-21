@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.javiermontillaarias.escapemanager.R
 import com.javiermontillaarias.escapemanager.data.network.RetrofitClient
 import com.javiermontillaarias.escapemanager.data.repository.GameRepository
 import com.javiermontillaarias.escapemanager.databinding.FragmentActiveGameBinding
@@ -59,14 +60,12 @@ class ActiveGameFragment : Fragment() {
         binding.tvGroupName.text = groupName
         binding.tvRoomName.text = roomName
 
-        // I-07: pasar la hora de inicio real para que el timer refleje tiempo transcurrido real
         viewModel.startTimer(startTime)
 
         viewModel.elapsedSeconds.observe(viewLifecycleOwner) { seconds ->
             binding.tvTimer.text = formatTime(seconds)
         }
 
-        // BUG-01: deshabilitar btnAddHint durante Loading para evitar doble-tap
         viewModel.hintsResult.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is Resource.Loading -> binding.btnAddHint.isEnabled = false
@@ -84,13 +83,19 @@ class ActiveGameFragment : Fragment() {
 
         viewModel.closeResult.observe(viewLifecycleOwner) { state ->
             when (state) {
-                is Resource.Loading -> binding.progressBar.visibility = View.VISIBLE
+                is Resource.Loading -> {
+                    binding.progressBar.visibility = View.VISIBLE
+                    binding.btnEscaped.isEnabled = false
+                    binding.btnNotEscaped.isEnabled = false
+                }
                 is Resource.Success -> {
                     binding.progressBar.visibility = View.GONE
                     showGameEndDialog(state.data.escaparon == true)
                 }
                 is Resource.Error -> {
                     binding.progressBar.visibility = View.GONE
+                    binding.btnEscaped.isEnabled = true
+                    binding.btnNotEscaped.isEnabled = true
                     Snackbar.make(binding.root, state.message, Snackbar.LENGTH_LONG).show()
                 }
                 else -> {}
@@ -122,7 +127,7 @@ class ActiveGameFragment : Fragment() {
             .setTitle(if (escaped) "¡Partida cerrada!" else "Partida cerrada")
             .setMessage(if (escaped) "El grupo escapó con éxito." else "El grupo no consiguió escapar.")
             .setPositiveButton("Volver al dashboard") { _, _ ->
-                findNavController().popBackStack()
+                findNavController().navigate(R.id.gmMainFragment)
             }
             .setCancelable(false)
             .show()
