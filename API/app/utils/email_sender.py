@@ -38,7 +38,8 @@ def _build_html_body(nombre_grupo: str, sala: str, fecha: str, hora_inicio: str,
                         border-radius: 0 0 8px 8px; }}
             .info-box {{ background: white; border-left: 4px solid #e94560;
                          padding: 15px; margin: 15px 0; border-radius: 4px; }}
-            .qr-section {{ text-align: center; padding: 20px; }}
+            .qr-section {{ text-align: center; padding: 20px; background: white;
+                           border-radius: 8px; margin-top: 15px; }}
             .footer {{ color: #888; font-size: 12px; text-align: center; margin-top: 20px; }}
         </style>
     </head>
@@ -58,9 +59,9 @@ def _build_html_body(nombre_grupo: str, sala: str, fecha: str, hora_inicio: str,
                 </div>
                 <div class="qr-section">
                     <p><strong>Tu código QR de acceso:</strong></p>
-                    <img src="cid:qr_code" alt="Código QR" width="200" height="200"/>
+                    <p style="font-size: 16px;">📎 El código QR está adjunto en este email como archivo PNG.</p>
                     <p style="color: #888; font-size: 12px;">
-                        Presenta este código al Game Master al llegar.<br>
+                        Descarga el adjunto y preséntalo al Game Master al llegar.<br>
                         El código es de un solo uso.
                     </p>
                 </div>
@@ -95,7 +96,7 @@ def send_booking_confirmation(
             html_content=_build_html_body(nombre_grupo, sala, fecha, hora_inicio, hora_fin),
         )
 
-        # QR como adjunto
+        # QR como adjunto descargable
         encoded_qr = base64.b64encode(qr_bytes).decode()
         attachment = Attachment(
             FileContent(encoded_qr),
