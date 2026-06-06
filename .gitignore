@@ -51,3 +51,5 @@ API/alembic/__pycache__/
 # Gradle
 .gradle/
 gradle-app.setting
+
+.gitignore
